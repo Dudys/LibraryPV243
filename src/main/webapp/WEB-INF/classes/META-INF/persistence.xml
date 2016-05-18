@@ -8,11 +8,11 @@
         <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 
         <properties>
-            <property name="hibernate.archive.autodetection" value="class, hbm"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-            <property name="hibernate.max_fetch_depth" value="3" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
             <property name="hibernate.show_sql" value="true" />
+            <property name="format_sql" value="true"/>
+
         </properties>
     </persistence-unit>
 </persistence>

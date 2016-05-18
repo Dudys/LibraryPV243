@@ -1,24 +1,31 @@
 package cz.muni.fi.pv242;
 
-import cz.muni.fi.pv242.persistence.BookDAO;
-import cz.muni.fi.pv242.persistence.BorrowingDAO;
-import cz.muni.fi.pv242.persistence.ReservationDAO;
-import cz.muni.fi.pv242.persistence.UserDAO;
-import cz.muni.fi.pv242.persistence.entity.*;
+import static org.junit.Assert.assertEquals;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import cz.muni.fi.pv242.persistence.BookDAO;
+import cz.muni.fi.pv242.persistence.BorrowingDAO;
+import cz.muni.fi.pv242.persistence.ReservationDAO;
+import cz.muni.fi.pv242.persistence.UserDAO;
+import cz.muni.fi.pv242.persistence.entity.Book;
+import cz.muni.fi.pv242.persistence.entity.Reservation;
+import cz.muni.fi.pv242.persistence.entity.User;
+import cz.muni.fi.pv242.persistence.entity.UserRole;
 
 /**
  * Created by honza on 5/17/16.
@@ -29,7 +36,7 @@ public class DAOTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "Library.war")
-                .addAsWebInfResource("WEB-INF/classes/META-INF/persistence.xml", "classes/META-INF/persistence.xml")
+                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/classes/META-INF/persistence.xml"), "classes/META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addPackage(Book.class.getPackage())
                 .addPackage(BookDAO.class.getPackage());
@@ -65,8 +72,9 @@ public class DAOTest {
         user.setEmail("mail@gmail.xom");
         List<UserRole> l = new ArrayList<>();
         l.add(UserRole.CUSTOMER);
-        user.setRoles(l);
-        user.setFullName("John Doe");
+        //user.setRoles(l);
+        user.setName("John");
+        user.setSurname("Doe");
         user.setEnabled(true);
 
 
@@ -78,7 +86,7 @@ public class DAOTest {
         bookDao.create(book);
         assertEquals(book,bookDao.getById(book.getId()));
 
-       /* book.setTotalItems(10);
+        book.setTotalItems(10);
         bookDao.update(book);
 
         assertEquals(book,bookDao.getById(book.getId()));
@@ -87,7 +95,7 @@ public class DAOTest {
 
         bookDao.delete(book);
 
-        assertEquals(0,bookDao.getAll().size());*/
+        assertEquals(0,bookDao.getAll().size());
     }
 
     @Test
@@ -97,8 +105,7 @@ public class DAOTest {
         assertEquals(user, userDao.getById(user.getId()));
         assertEquals(user, userDao.getByEmail(user.getEmail()));
 
-/*
-        user.setFullName("new Name");
+        user.setSurname("new Name");
         userDao.update(user);
         assertEquals(user, userDao.getByEmail(user.getEmail()));
 
@@ -107,7 +114,7 @@ public class DAOTest {
 
         userDao.delete(user);
 
-        assertEquals(0,userDao.getAll().size());*/
+        assertEquals(0,userDao.getAll().size());
     }
 
      // TODO @jbouska create reservation and Borrowing test

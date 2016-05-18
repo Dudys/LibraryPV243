@@ -4,6 +4,7 @@ package cz.muni.fi.pv242.persistence;
 import cz.muni.fi.pv242.persistence.entity.Reservation;
 
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ReservationDAO {
     }
 
     public List<Reservation> getAll(){
-        return em.createQuery("SELECT b FROM Reservation b").getResultList();
+        return em.createQuery("SELECT b FROM Reservation b", Reservation.class).getResultList();
     }
 
     public void update(Reservation book) {
@@ -34,7 +35,7 @@ public class ReservationDAO {
     }
 
     public void delete(Reservation book) {
-        em.remove(book);
+        em.remove(em.merge(book));
     }
 
 
