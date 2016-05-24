@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="container">
+    <div class="page-header">
+        <h1>Add Book</h1>
+    </div>
+</div>
+<div class="container">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="fullName" class="control-label col-xs-2">Full name</label>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" id="fullName" placeholder="Full name of user">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="control-label col-xs-2">E-mail</label>
+            <div class="col-xs-5">
+                <input type="email" class="form-control" id="email" placeholder="E-mail">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="enable" class="control-label col-xs-2" >Enable</label>
+            <div class="col-md-5">
+                <select id="enable" name="enable" class="form-control">
+                    <option value="1">True</option>
+                    <option value="2">False</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="age" class="control-label col-xs-2" >Age</label>
+            <div class="col-md-5">
+                <input type="number" min="0" class="form-control" id="age" placeholder="Age">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="role" class="control-label col-xs-2" >Role</label>
+            <div class="col-md-5">
+                <select id="role" name="role" class="form-control">
+                    <option value="1">Customer</option>
+                    <option value="2">Librarian</option>
+                    <option value="3">Admin</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label col-xs-2" >Password</label>
+            <div class="col-md-5">
+                <input id="password" class="form-control" placeholder="Password" name="password" type="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword" class="control-label col-xs-2" >Confirm password</label>
+            <div class="col-md-5">
+                <input id="confirmPassword" class="form-control" placeholder="Confirm password" name="confirmPassword" type="password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
