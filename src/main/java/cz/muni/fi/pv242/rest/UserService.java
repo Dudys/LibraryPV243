@@ -47,8 +47,8 @@ public interface UserService {
     User findUserByEmail(@QueryParam("email") String email);
 
     @GET
-    @Path("/test")
-    String test();
+    @Path("/createDataBatchJob")
+    String runJob();
 
 
 

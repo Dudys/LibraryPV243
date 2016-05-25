@@ -1,0 +1,9 @@
+<job id="createDataJob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <step id="createDataStep" >
+        <chunk item-count="3">
+            <reader ref="cz.muni.fi.pv242.batch.ItemReader"/>
+            <processor ref="cz.muni.fi.pv242.batch.JobItemProcessor"/>
+            <writer ref="ItemWriter"/>
+        </chunk>
+    </step>
+</job>
