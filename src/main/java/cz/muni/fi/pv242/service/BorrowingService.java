@@ -10,6 +10,6 @@ public interface BorrowingService {
 
     BorrowingDTO createBorrowing(BorrowingCreateDTO b);
     BorrowingDTO updateBorrowing(BorrowingDTO b);
-    BorrowingDTO deleteBorrowing(BorrowingDTO b);
+    void deleteBorrowing(BorrowingDTO b);
     BorrowingDTO getBookByID(long id);
 }
