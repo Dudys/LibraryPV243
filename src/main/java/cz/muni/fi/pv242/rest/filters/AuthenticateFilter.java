@@ -37,6 +37,7 @@ public class AuthenticateFilter implements ContainerRequestFilter {
         //If no authorization information present; block access
         if(authorization == null || authorization.isEmpty())
         {
+
             Response response = Response
                     .status(Response.Status.UNAUTHORIZED)
                     .type(MediaType.TEXT_PLAIN_TYPE)
