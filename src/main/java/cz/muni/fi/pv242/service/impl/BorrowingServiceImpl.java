@@ -42,7 +42,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     }
 
     @Override
-    public BorrowingDTO getBookByID(long id) {
+    public BorrowingDTO getBorrowingByID(long id) {
         Borrowing borr = borrowingDAO.getById(id);
 
         return mapper.map(borr, BorrowingDTO.class);
