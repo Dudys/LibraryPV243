@@ -49,11 +49,9 @@ public class ReservationServiceImpl implements ReservationService {
         return null;
     }
 
-    public ReservationDTO deleteBorrowing(ReservationDTO r) {
-        Reservation reservation = mapper.map(r, Reservation.class);
+    public void deleteBorrowing(ReservationDTO r) {
+        reservationDAO.delete(mapper.map(r, Reservation.class));
 
-        reservationDAO.delete(reservation);
-        return mapper.map(reservation, ReservationDTO.class);
     }
 
     @Override

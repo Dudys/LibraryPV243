@@ -41,12 +41,17 @@ public class BorrowingServiceImpl implements BorrowingService {
     }
 
     @Override
+<<<<<<< HEAD
 
     public BorrowingDTO deleteBorrowing(BorrowingDTO b) {
         Borrowing borr = mapper.map(b, Borrowing.class);
 
         borrowingDAO.delete(borr);
         return mapper.map(borr, BorrowingDTO.class);
+=======
+    public void deleteBorrowing(BorrowingDTO b) {
+        borrowingDAO.delete(mapper.map(b, Borrowing.class));
+>>>>>>> repared delete methods in services for book, reservation and borrowing
     }
 
     @Override
