@@ -9,7 +9,7 @@ import cz.muni.fi.pv242.rest.model.BookDTO;
 public interface BookService {
     BookDTO createBook(BookCreateDTO b);
     BookDTO updateBook(BookDTO b);
-    void deleteBook(BookDTO b);
+    BookDTO deleteBook(BookDTO b);
     BookDTO getBookByID(long id);
 
 }

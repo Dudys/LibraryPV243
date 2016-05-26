@@ -36,13 +36,21 @@ public class BorrowingServiceImpl implements BorrowingService {
         return mapper.map(borr, BorrowingDTO.class);
     }
 
-    @Override
-    public void deleteBorrowing(BorrowingDTO b) {
-        borrowingDAO.delete(mapper.map(b, Borrowing.class));
+    @Override public BorrowingDTO getBorrowingByID(long id) {
+        return null;
     }
 
     @Override
-    public BorrowingDTO getBorrowingByID(long id) {
+
+    public BorrowingDTO deleteBorrowing(BorrowingDTO b) {
+        Borrowing borr = mapper.map(b, Borrowing.class);
+
+        borrowingDAO.delete(borr);
+        return mapper.map(borr, BorrowingDTO.class);
+    }
+
+    @Override
+    public BorrowingDTO getBookByID(long id) {
         Borrowing borr = borrowingDAO.getById(id);
 
         return mapper.map(borr, BorrowingDTO.class);

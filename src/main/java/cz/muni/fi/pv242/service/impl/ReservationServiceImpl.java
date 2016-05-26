@@ -28,8 +28,12 @@ public class ReservationServiceImpl implements ReservationService {
         return mapper.map(reservation, ReservationDTO.class);
     }
 
+    @Override public ReservationDTO updateReservation(ReservationDTO r) {
+            return null;
+    }
+
     @Override
-    public ReservationDTO updateReservation(ReservationDTO r) {
+    public ReservationDTO updateBorrowing(ReservationDTO r) {
         Reservation reservation = mapper.map(r, Reservation.class);
 
         reservationDAO.update(reservation);
@@ -41,8 +45,19 @@ public class ReservationServiceImpl implements ReservationService {
         reservationDAO.delete(mapper.map(r, Reservation.class));
     }
 
+    @Override public ReservationDTO getReservationByID(long id) {
+        return null;
+    }
+
+    public ReservationDTO deleteBorrowing(ReservationDTO r) {
+        Reservation reservation = mapper.map(r, Reservation.class);
+
+        reservationDAO.delete(reservation);
+        return mapper.map(reservation, ReservationDTO.class);
+    }
+
     @Override
-    public ReservationDTO getReservationByID(long id) {
+    public ReservationDTO getBookByID(long id) {
         Reservation reservation = reservationDAO.getById(id);
         return mapper.map(reservation, ReservationDTO.class);
     }
