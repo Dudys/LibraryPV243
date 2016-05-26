@@ -34,19 +34,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDTO updateBook(BookDTO b) {
         cz.muni.fi.pv242.persistence.entity.Book book =
-                mapper.map(b, cz.muni.fi.pv242.persistence.entity.Book.class);
+                mapper.map(b, Book.class);
 
         bookDAO.update(book);
         return mapper.map(book, BookDTO.class);
     }
 
     @Override
-    public BookDTO deleteBook(BookDTO b) {
-        cz.muni.fi.pv242.persistence.entity.Book book =
-                mapper.map(b, cz.muni.fi.pv242.persistence.entity.Book.class);
-
-        bookDAO.delete(book);
-        return mapper.map(book, BookDTO.class);
+    public void deleteBook(BookDTO b) {
+        bookDAO.delete(mapper.map(b, Book.class));
     }
 
     @Override
