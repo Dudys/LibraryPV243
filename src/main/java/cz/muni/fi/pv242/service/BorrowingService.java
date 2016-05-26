@@ -14,5 +14,4 @@ public interface BorrowingService {
     BorrowingDTO getBorrowingByID(long id);
     void deleteBorrowing(BorrowingDTO b);
 
-    BorrowingDTO getBookByID(long id);
 }
