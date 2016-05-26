@@ -10,7 +10,7 @@ import cz.muni.fi.pv242.rest.model.ReservationDTO;
 public interface ReservationService {
 
     ReservationDTO createReservation(ReservationCreateDTO r);
-    ReservationDTO updateBorrowing(ReservationDTO r);
-    void deleteBorrowing(ReservationDTO r);
-    ReservationDTO getBookByID(long id);
+    ReservationDTO updateReservation(ReservationDTO r);
+    void deleteReservation(ReservationDTO r);
+    ReservationDTO getReservationByID(long id);
 }
