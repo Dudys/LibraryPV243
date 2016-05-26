@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import cz.muni.fi.pv242.jms.JMSService;
 import cz.muni.fi.pv242.persistence.UserDAO;
 import cz.muni.fi.pv242.rest.model.User;
 import cz.muni.fi.pv242.service.UserService;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService{
     @Inject
     UserDAO userDao;
 
+    @Inject
+    JMSService jmsService;
+
     private Mapper mapper = new DozerBeanMapper();
 
     @Override
@@ -30,7 +34,12 @@ public class UserServiceImpl implements UserService{
                 mapper.map(user, cz.muni.fi.pv242.persistence.entity.User.class);
         usr.setPasswordHash(hashPassword(user.getPassword()));
         userDao.create(usr);
-        return mapper.map(usr,User.class);
+        User newUser =  mapper.map(usr,User.class);
+
+        //send message to JMS
+        jmsService.sendMessage("Created new User: " + newUser);
+
+        return newUser;
     }
 
     @Override

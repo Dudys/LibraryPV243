@@ -1,12 +1,12 @@
 package cz.muni.fi.pv242.rest.impl;
 
+import javax.batch.operations.JobOperator;
+import javax.batch.runtime.BatchRuntime;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Properties;
 
-import cz.muni.fi.pv242.persistence.entity.UserRole;
 import cz.muni.fi.pv242.rest.model.User;
 import cz.muni.fi.pv242.service.UserService;
 
@@ -48,27 +48,15 @@ public class RestUserServiceImpl implements cz.muni.fi.pv242.rest.UserService {
     @Override
     public User findUserByEmail(String email) {
 
-        User u = new User();
-        u.setEnabled(true);
-        u.setSurname("Doe");
-        u.setName("John ");
-        u.setEmail("john@doe.cz");
-        u.setAge(15);
-        u.setPassword("password");
-        List<UserRole> l = new ArrayList<>();
-        l.add(UserRole.CUSTOMER);
-        u.setRoles(l);
-
-        return u;
-
-
-
-                //service.getUserByEmail(email);
+        return userService.getUserByEmail(email);
     }
 
     @Override
-    public String test() {
-        return "{'ok' : 'ok'}";
+    public String runJob() {
+        JobOperator jo = BatchRuntime.getJobOperator();
+        long jid = jo.start("createDataJob", new Properties());
+
+        return "job started with jobId " + String.valueOf(jid);
     }
 
 
