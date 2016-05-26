@@ -38,8 +38,7 @@ public class DAOTest {
         return ShrinkWrap.create(WebArchive.class, "Library.war")
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/classes/META-INF/persistence.xml"), "classes/META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addPackage(Book.class.getPackage())
-                .addPackage(BookDAO.class.getPackage());
+                .addPackages(true,"cz.muni.fi.pv242.persistence");
     }
 
     @Inject
