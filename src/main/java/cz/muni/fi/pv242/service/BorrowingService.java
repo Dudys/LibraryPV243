@@ -1,5 +1,7 @@
 package cz.muni.fi.pv242.service;
 
+import java.util.List;
+
 import cz.muni.fi.pv242.rest.model.BorrowingCreateDTO;
 import cz.muni.fi.pv242.rest.model.BorrowingDTO;
 
@@ -12,4 +14,5 @@ public interface BorrowingService {
     BorrowingDTO updateBorrowing(BorrowingDTO b);
     void deleteBorrowing(BorrowingDTO b);
     BorrowingDTO getBorrowingByID(long id);
+    List<BorrowingDTO> getAllBorrowings();
 }

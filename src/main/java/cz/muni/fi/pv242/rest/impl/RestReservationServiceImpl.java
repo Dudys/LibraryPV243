@@ -5,6 +5,8 @@ import cz.muni.fi.pv242.rest.model.ReservationCreateDTO;
 import cz.muni.fi.pv242.rest.model.ReservationDTO;
 import cz.muni.fi.pv242.service.ReservationService;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -17,22 +19,27 @@ public class RestReservationServiceImpl implements RestReservationService {
 
 
     @Override
-    public ReservationDTO addBook(ReservationCreateDTO reservation) {
+    public ReservationDTO addReservation(ReservationCreateDTO reservation) {
         return reservationService.createReservation(reservation);
     }
 
     @Override
-    public ReservationDTO getBorrowing(long id) {
+    public ReservationDTO getReservation(long id) {
         return reservationService.getReservationByID(id);
     }
 
     @Override
-    public ReservationDTO updateBook(ReservationDTO updatedResetvation) {
+    public ReservationDTO updateReservation(ReservationDTO updatedResetvation) {
         return reservationService.updateReservation(updatedResetvation);
     }
 
     @Override
-    public void deleteBook(long id) {
+    public void deleteReservation(long id) {
         reservationService.deleteReservation(reservationService.getReservationByID(id));
     }
+
+	@Override
+	public List<ReservationDTO> getAllReservations() {
+		return reservationService.getAllReservations();
+	}
 }

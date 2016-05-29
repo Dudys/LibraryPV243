@@ -124,6 +124,11 @@
             <version>2.0-EDR1</version>
         </dependency>
         <dependency>
+       		<groupId>org.jboss.resteasy</groupId>
+       		<artifactId>resteasy-json-p-provider</artifactId>
+       		<version>3.0.6.Final</version>
+    	</dependency>
+        <dependency>
             <groupId>org.jboss.spec.javax.jms</groupId>
             <artifactId>jboss-jms-api_2.0_spec</artifactId>
             <version>1.0.0.Alpha1</version>

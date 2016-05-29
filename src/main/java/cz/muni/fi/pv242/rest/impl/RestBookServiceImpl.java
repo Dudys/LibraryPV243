@@ -5,6 +5,8 @@ import cz.muni.fi.pv242.rest.model.BookCreateDTO;
 import cz.muni.fi.pv242.rest.model.BookDTO;
 import cz.muni.fi.pv242.service.BookService;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -14,6 +16,11 @@ public class RestBookServiceImpl implements RestBookService {
 
     @Inject
     BookService bookService;
+    
+    @Override
+    public List<BookDTO> getAllBooks(){
+    	return bookService.getAllBooks();
+    }
 
     @Override
     public BookDTO addBook(BookCreateDTO book){
@@ -22,7 +29,7 @@ public class RestBookServiceImpl implements RestBookService {
 
     @Override
     public BookDTO getBook(long id) {
-        return bookService.getBookByID(id);
+    	return bookService.getBookByID(id);
     }
 
     @Override

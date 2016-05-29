@@ -3,7 +3,10 @@ package cz.muni.fi.pv242.rest;
 import cz.muni.fi.pv242.rest.model.BookCreateDTO;
 import cz.muni.fi.pv242.rest.model.BookDTO;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,10 +20,14 @@ import javax.ws.rs.core.MediaType;
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Path("/book")
+@Path("/books")
 public interface RestBookService {
+	
+	@GET
+	@Path("/")
+	List<BookDTO> getAllBooks();
 
-    @POST
+	@POST
     @Path("/add")
     BookDTO addBook(BookCreateDTO book);
 
@@ -32,7 +39,7 @@ public interface RestBookService {
     @Path("/update")
     BookDTO updateBook(BookDTO updatedBook);
 
-    @PUT
+    @DELETE
     @Path("/{id}/delete")
     void deleteBook(@PathParam("id") long id);
 }

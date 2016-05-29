@@ -8,6 +8,9 @@ import cz.muni.fi.pv242.service.BookService;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -33,8 +36,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDTO updateBook(BookDTO b) {
-        cz.muni.fi.pv242.persistence.entity.Book book =
-                mapper.map(b, Book.class);
+        Book book = mapper.map(b, Book.class);
 
         bookDAO.update(book);
         return mapper.map(book, BookDTO.class);
@@ -47,7 +49,18 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDTO getBookByID(long id) {
-        cz.muni.fi.pv242.persistence.entity.Book book = bookDAO.getById(id);
+        Book book = bookDAO.getById(id);
         return mapper.map(book, BookDTO.class);
+    }
+    
+    @Override
+    public List<BookDTO> getAllBooks(){
+    	List<Book> books = bookDAO.getAll();
+    	List<BookDTO> bookDTOs = new ArrayList<>();
+    	for (Book book : books) {
+    		bookDTOs.add(mapper.map(book, BookDTO.class));
+		}
+    	
+    	return bookDTOs;
     }
 }

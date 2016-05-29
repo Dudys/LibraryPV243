@@ -11,16 +11,20 @@
         <tr>
             <th>id</th>
             <th>Book</th>
-            <th>IBAN</th>
-            <th></th>
+            <th>Reservation from</th>
+            <th>Reservation to</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Name of book</td>
-            <td>123456789</td>
-            <td><a href="#" class="btn btn-primary">Cancel</a> <a href="#" class="btn btn-primary">Borrow</a></td>
+        <tr ng-repeat="reservation in reservations">
+            <td>{{reservation.id}}</td>
+            <td>{{reservation.reservedBook.name}}</td>
+            <td>{{reservation.reservationDate | date:'dd.MM.yyyy'}}</td>
+            <td>{{reservation.borrowingDate | date:'dd.MM.yyyy'}}</td>
+            <td>
+            	<a href="cancelReservation(reservation)" class="btn btn-primary">Cancel</a> 
+            	<a href="borrowBook(reservation)" class="btn btn-primary">Borrow</a>
+            </td>
         </tr>
         </tbody>
     </table>

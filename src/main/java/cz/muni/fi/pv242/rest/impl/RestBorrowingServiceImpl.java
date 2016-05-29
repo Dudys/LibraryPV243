@@ -5,6 +5,8 @@ import cz.muni.fi.pv242.rest.model.BorrowingCreateDTO;
 import cz.muni.fi.pv242.rest.model.BorrowingDTO;
 import cz.muni.fi.pv242.service.BorrowingService;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -16,7 +18,7 @@ public class RestBorrowingServiceImpl implements RestBorrowingService {
     private BorrowingService borrowingService;
 
     @Override
-    public BorrowingDTO addBook(BorrowingCreateDTO borrowing) {
+    public BorrowingDTO addBorrowing(BorrowingCreateDTO borrowing) {
         return borrowingService.createBorrowing(borrowing);
     }
 
@@ -26,12 +28,17 @@ public class RestBorrowingServiceImpl implements RestBorrowingService {
     }
 
     @Override
-    public BorrowingDTO updateBook(BorrowingDTO updatedBorrowing) {
+    public BorrowingDTO updateBorrowing(BorrowingDTO updatedBorrowing) {
         return borrowingService.updateBorrowing(updatedBorrowing);
     }
 
     @Override
-    public void deleteBook(long id) {
+    public void deleteBorrowing(long id) {
         borrowingService.deleteBorrowing(borrowingService.getBorrowingByID(id));
     }
+
+	@Override
+	public List<BorrowingDTO> getAllBorrowings() {
+		return borrowingService.getAllBorrowings();
+	}
 }

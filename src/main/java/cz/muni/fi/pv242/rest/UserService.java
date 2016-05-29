@@ -1,5 +1,7 @@
 package cz.muni.fi.pv242.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,7 +13,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import cz.muni.fi.pv242.rest.filters.Authenticate;
-import cz.muni.fi.pv242.rest.model.User;
+import cz.muni.fi.pv242.rest.model.UserCreateDTO;
+import cz.muni.fi.pv242.rest.model.UserDTO;
+import cz.muni.fi.pv242.rest.model.UserUpdateDTO;
 
 /**
  * Created by honza on 5/18/16.
@@ -19,17 +23,17 @@ import cz.muni.fi.pv242.rest.model.User;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Path("/user")
+@Path("/users")
 public interface UserService {
 
     @Authenticate
     @POST
     @Path("/add")
-    User addUser(User user);
+    UserDTO addUser(UserCreateDTO user);
 
     @GET
     @Path("/{id}")
-    User getUser(@PathParam("id") long id);
+    UserDTO getUser(@PathParam("id") long id);
 
     @PUT
     @Path("/{id}/disable")
@@ -40,16 +44,17 @@ public interface UserService {
     void enableUser(@PathParam("id") long id);
 
     @PUT
-    @Path("/update") User updateUser(User updatedUser);
+    @Path("/update") UserDTO updateUser(UserUpdateDTO updatedUser);
 
     @GET
     @Path("/findByEmail")
-    User findUserByEmail(@QueryParam("email") String email);
+    UserDTO findUserByEmail(@QueryParam("email") String email);
 
     @GET
     @Path("/createDataBatchJob")
     String runJob();
 
-
-
+    @GET
+    @Path("/")
+    List<UserDTO> getAllUsers();
 }

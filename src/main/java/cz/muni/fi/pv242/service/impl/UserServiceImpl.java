@@ -8,11 +8,16 @@ import javax.inject.Inject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.muni.fi.pv242.jms.JMSService;
 import cz.muni.fi.pv242.persistence.UserDAO;
-import cz.muni.fi.pv242.rest.model.User;
+import cz.muni.fi.pv242.rest.model.UserCreateDTO;
+import cz.muni.fi.pv242.rest.model.UserDTO;
+import cz.muni.fi.pv242.rest.model.UserUpdateDTO;
 import cz.muni.fi.pv242.service.UserService;
+import cz.muni.fi.pv242.persistence.entity.User;
 
 /**
  * Created by honza on 5/18/16.
@@ -29,12 +34,11 @@ public class UserServiceImpl implements UserService{
     private Mapper mapper = new DozerBeanMapper();
 
     @Override
-    public User createUser(User user) {
-        cz.muni.fi.pv242.persistence.entity.User usr =
-                mapper.map(user, cz.muni.fi.pv242.persistence.entity.User.class);
+    public UserDTO createUser(UserCreateDTO user) {
+        User usr = mapper.map(user, User.class);
         usr.setPasswordHash(hashPassword(user.getPassword()));
         userDao.create(usr);
-        User newUser =  mapper.map(usr,User.class);
+        UserDTO newUser =  mapper.map(usr,UserDTO.class);
 
         //send message to JMS
         jmsService.sendMessage("Created new User: " + newUser);
@@ -43,43 +47,42 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(User user) {
-        cz.muni.fi.pv242.persistence.entity.User usr =
-                mapper.map(user, cz.muni.fi.pv242.persistence.entity.User.class);
+    public UserDTO updateUser(UserUpdateDTO user) {
+        User usr = mapper.map(user, cz.muni.fi.pv242.persistence.entity.User.class);
         usr.setPasswordHash(hashPassword(user.getPassword()));
         userDao.update(usr);
-        return mapper.map(usr,User.class);
+        return mapper.map(usr, UserDTO.class);
     }
 
     @Override
-    public User getUserById(long id) {
-       cz.muni.fi.pv242.persistence.entity.User usr = userDao.getById(id);
-        return mapper.map(usr,User.class);
+    public UserDTO getUserById(long id) {
+    	User usr = userDao.getById(id);
+    	return mapper.map(usr, UserDTO.class);
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        cz.muni.fi.pv242.persistence.entity.User usr = userDao.getByEmail(email);
-        return mapper.map(usr,User.class);
+    public UserDTO getUserByEmail(String email) {
+        User usr = userDao.getByEmail(email);
+        return mapper.map(usr, UserDTO.class);
     }
 
     @Override
     public void enableUser(long id) {
-        cz.muni.fi.pv242.persistence.entity.User usr = userDao.getById(id);
-        usr.setEnabled(true);
-       userDao.update(usr);
+    	User usr = userDao.getById(id);
+    	usr.setEnabled(true);
+    	userDao.update(usr);
     }
 
     @Override
     public void disableUser(long id) {
-        cz.muni.fi.pv242.persistence.entity.User usr = userDao.getById(id);
+        User usr = userDao.getById(id);
         usr.setEnabled(false);
         userDao.update(usr);
     }
 
     @Override
     public boolean authenticate(long userId, String password) {
-        cz.muni.fi.pv242.persistence.entity.User usr = userDao.getById(userId);
+        User usr = userDao.getById(userId);
         return usr.getPasswordHash().equals(hashPassword(password));
     }
 
@@ -109,4 +112,15 @@ public class UserServiceImpl implements UserService{
         }
         return generatedHash;
     }
+
+	@Override
+	public List<UserDTO> getAllUsers() {
+		List<User> users = userDao.getAll();
+    	List<UserDTO> userDTOs = new ArrayList<>();
+    	for (User user : users) {
+    		userDTOs.add(mapper.map(user, UserDTO.class));
+		}
+    	
+    	return userDTOs;
+	}
 }

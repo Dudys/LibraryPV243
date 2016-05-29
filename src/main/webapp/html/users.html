@@ -6,7 +6,10 @@
     </div>
 </div>
 <div class="container">
-    <button class="btn btn-primary" type="submit">Add User</button>
+    <a href="#/users/add" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add User
+    </a>
 </div>
 <div class="container">
     <table class="table table-striped">
@@ -14,7 +17,7 @@
         <tr>
             <th>id</th>
             <th>Name</th>
-            <th>Enable</th>
+            <th>Enabled</th>
             <th>Age</th>
             <th>E-mail</th>
             <th>Role</th>
@@ -22,14 +25,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a href="#" class="btn btn-primary">Update</a> <a href="#" class="btn btn-primary">Enable</a></td>
+        <tr ng-repeat="user in users">
+            <td>{{user.id}}</td>
+            <td>{{user.name}} {{user.surname}}</td>
+            <td>{{user.enabled | yesNo}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.email}}</td>
+            <td><span ng-repeat="role in user.roles">{{role | lowercase}}, </span></td>
+            <td>
+            	<a href="#" class="btn btn-primary">Update</a> 
+            	<a href="enableUser(user)" class="btn btn-primary">Enable</a>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.muni.fi.pv242.persistence.entity.UserRole;
-import cz.muni.fi.pv242.rest.model.User;
+import cz.muni.fi.pv242.rest.model.UserCreateDTO;
+import cz.muni.fi.pv242.rest.model.UserDTO;
 import cz.muni.fi.pv242.service.UserService;
 
 @RunWith(Arquillian.class)
@@ -45,12 +46,12 @@ public class JMSTest {
 	@Inject
 	private UserService service;
 
-	private User user;
+	private UserCreateDTO user;
 
 	@Before
 	public void setUp()
 	{
-		user = new User();
+		user = new UserCreateDTO();
 		user.setAge(50);
 		user.setEmail("mail@gmail.xom");
 		List<UserRole> l = new ArrayList<>();
@@ -67,7 +68,7 @@ public class JMSTest {
 	@Test
 	public void jmsTest()
 	{
-		User created = service.createUser(user);
+		UserDTO created = service.createUser(user);
 		String str = context.createConsumer(queue).receiveBody(String.class, 5000L);
 		Assert.assertFalse(str.isEmpty());
 		Assert.assertEquals("Created new User: " + created, str);

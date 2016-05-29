@@ -22,7 +22,7 @@ public class BookDTO {
     private String name;
 
     @NotNull
-    @Pattern(regexp = "((978[\\--– ])?[0-9][0-9\\--– ]{10}[\\--– ][0-9xX])|((978)?[0-9]{9}[0-9Xx])")
+    @Pattern(regexp = "(978-)?[0-9]{1,5}-?[0-9]{1,7}-?[0-9]{1,6}-?[0-9]{1}")
     private String isbn;
 
     @NotNull

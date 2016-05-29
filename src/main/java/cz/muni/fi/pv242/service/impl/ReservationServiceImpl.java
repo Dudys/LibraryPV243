@@ -1,12 +1,17 @@
 package cz.muni.fi.pv242.service.impl;
 
 import cz.muni.fi.pv242.persistence.ReservationDAO;
+import cz.muni.fi.pv242.persistence.entity.Borrowing;
 import cz.muni.fi.pv242.persistence.entity.Reservation;
+import cz.muni.fi.pv242.rest.model.BorrowingDTO;
 import cz.muni.fi.pv242.rest.model.ReservationCreateDTO;
 import cz.muni.fi.pv242.rest.model.ReservationDTO;
 import cz.muni.fi.pv242.service.ReservationService;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -46,4 +51,15 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationDAO.getById(id);
         return mapper.map(reservation, ReservationDTO.class);
     }
+
+	@Override
+	public List<ReservationDTO> getAllReservations() {
+		List<Reservation> reservations = reservationDAO.getAll();
+    	List<ReservationDTO> reservationDTOs = new ArrayList<>();
+    	for (Reservation reservation : reservations) {
+    		reservationDTOs.add(mapper.map(reservation, ReservationDTO.class));
+		}
+    	
+    	return reservationDTOs;
+	}
 }

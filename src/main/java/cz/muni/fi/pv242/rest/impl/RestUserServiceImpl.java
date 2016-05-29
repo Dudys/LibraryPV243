@@ -5,9 +5,12 @@ import javax.batch.runtime.BatchRuntime;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import java.util.List;
 import java.util.Properties;
 
-import cz.muni.fi.pv242.rest.model.User;
+import cz.muni.fi.pv242.rest.model.UserCreateDTO;
+import cz.muni.fi.pv242.rest.model.UserDTO;
+import cz.muni.fi.pv242.rest.model.UserUpdateDTO;
 import cz.muni.fi.pv242.service.UserService;
 
 /**
@@ -20,12 +23,12 @@ public class RestUserServiceImpl implements cz.muni.fi.pv242.rest.UserService {
     UserService userService;
 
     @Override
-    public User addUser(User user) {
+    public UserDTO addUser(UserCreateDTO user) {
         return userService.createUser(user);
     }
 
     @Override
-    public User getUser(long id) {
+    public UserDTO getUser(long id) {
         return userService.getUserById(id);
     }
 
@@ -41,12 +44,12 @@ public class RestUserServiceImpl implements cz.muni.fi.pv242.rest.UserService {
     }
 
     @Override
-    public User updateUser(User updatedUser) {
+    public UserDTO updateUser(UserUpdateDTO updatedUser) {
         return userService.updateUser(updatedUser);
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public UserDTO findUserByEmail(String email) {
 
         return userService.getUserByEmail(email);
     }
@@ -58,6 +61,11 @@ public class RestUserServiceImpl implements cz.muni.fi.pv242.rest.UserService {
 
         return "job started with jobId " + String.valueOf(jid);
     }
+
+	@Override
+	public List<UserDTO> getAllUsers() {
+		return userService.getAllUsers();
+	}
 
 
 }

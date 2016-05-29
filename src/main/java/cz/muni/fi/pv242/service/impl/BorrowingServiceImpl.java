@@ -1,12 +1,17 @@
 package cz.muni.fi.pv242.service.impl;
 
 import cz.muni.fi.pv242.persistence.BorrowingDAO;
+import cz.muni.fi.pv242.persistence.entity.Book;
 import cz.muni.fi.pv242.persistence.entity.Borrowing;
+import cz.muni.fi.pv242.rest.model.BookDTO;
 import cz.muni.fi.pv242.rest.model.BorrowingCreateDTO;
 import cz.muni.fi.pv242.rest.model.BorrowingDTO;
 import cz.muni.fi.pv242.service.BorrowingService;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -47,4 +52,15 @@ public class BorrowingServiceImpl implements BorrowingService {
 
         return mapper.map(borr, BorrowingDTO.class);
     }
+
+	@Override
+	public List<BorrowingDTO> getAllBorrowings() {
+		List<Borrowing> borrowings = borrowingDAO.getAll();
+    	List<BorrowingDTO> borrowingDTOs = new ArrayList<>();
+    	for (Borrowing borrowing : borrowings) {
+    		borrowingDTOs.add(mapper.map(borrowing, BorrowingDTO.class));
+		}
+    	
+    	return borrowingDTOs;
+	}
 }

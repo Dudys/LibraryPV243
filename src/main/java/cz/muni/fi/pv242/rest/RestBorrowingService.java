@@ -3,6 +3,8 @@ package cz.muni.fi.pv242.rest;
 import cz.muni.fi.pv242.rest.model.BorrowingCreateDTO;
 import cz.muni.fi.pv242.rest.model.BorrowingDTO;
 
+import java.util.List;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -11,12 +13,16 @@ import javax.ws.rs.core.MediaType;
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Path("/borrowing")
+@Path("/borrowings")
 public interface RestBorrowingService {
+	
+	@GET
+	@Path("/")
+	List<BorrowingDTO> getAllBorrowings();
 
     @POST
     @Path("/add")
-    BorrowingDTO addBook(BorrowingCreateDTO borrowing);
+    BorrowingDTO addBorrowing(BorrowingCreateDTO borrowing);
 
     @GET
     @Path("/{id}")
@@ -24,9 +30,9 @@ public interface RestBorrowingService {
 
     @PUT
     @Path("/update")
-    BorrowingDTO updateBook(BorrowingDTO updatedBorrowing);
+    BorrowingDTO updateBorrowing(BorrowingDTO updatedBorrowing);
 
-    @PUT
+    @DELETE
     @Path("/{id}/delete")
-    void deleteBook(@PathParam("id") long id);
+    void deleteBorrowing(@PathParam("id") long id);
 }

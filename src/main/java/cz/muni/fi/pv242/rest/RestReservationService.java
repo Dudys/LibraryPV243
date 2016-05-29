@@ -3,6 +3,8 @@ package cz.muni.fi.pv242.rest;
 import cz.muni.fi.pv242.rest.model.ReservationCreateDTO;
 import cz.muni.fi.pv242.rest.model.ReservationDTO;
 
+import java.util.List;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -11,22 +13,26 @@ import javax.ws.rs.core.MediaType;
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Path("/reservation")
+@Path("/reservations")
 public interface RestReservationService {
+	
+	@GET
+	@Path("/")
+	List<ReservationDTO> getAllReservations();
 
     @POST
     @Path("/add")
-    ReservationDTO addBook(ReservationCreateDTO reservation);
+    ReservationDTO addReservation(ReservationCreateDTO reservation);
 
     @GET
     @Path("/{id}")
-    ReservationDTO getBorrowing(@PathParam("id") long id);
+    ReservationDTO getReservation(@PathParam("id") long id);
 
     @PUT
     @Path("/update")
-    ReservationDTO updateBook(ReservationDTO updatedResetvation);
+    ReservationDTO updateReservation(ReservationDTO updatedResetvation);
 
-    @PUT
+    @DELETE
     @Path("/{id}/delete")
-    void deleteBook(@PathParam("id") long id);
+    void deleteReservation(@PathParam("id") long id);
 }
