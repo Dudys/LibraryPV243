@@ -1,11 +1,15 @@
 package cz.muni.fi.pv242.rest.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import java.util.List;
+
 import cz.muni.fi.pv242.persistence.entity.Borrowing;
 import lombok.Data;
-
-import javax.validation.constraints.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
 /**
  * Created by honza on 5/18/16.
@@ -30,4 +34,10 @@ public class BookDTO {
     private Integer totalItems;
 
     private List<Borrowing> borrowings;
+
+    @Override
+    public String toString()
+    {
+        return "Book id=" + id + ", name=" + name + ", totalItems=" + totalItems;
+    }
 }
