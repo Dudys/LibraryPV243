@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Create new book</h1>
+    </div>
+</div>
+<div class="container">
+    <form name="form"  novalidate class="form-horizontal" ng-submit="vm.addBook()">
+        <div class="form-group" ng-class="{'has-error': !(form.name.$valid) && form.name.$touched}">
+            <label for="name" class="control-label col-xs-2">Name</label>
+            <div class="col-xs-5">
+                <input id="name" placeholder="Book name" ng-minlength="3" ng-maxlength="50" 
+                		type="text" name="name" class="form-control" ng-model="vm.book.name" ng-required="true">
+                <span class="help-block" ng-show="form.name.$error.required && form.name.$touched">
+                    name is required
+                </span>
+            	<span class="help-block" ng-show="form.name.$error.minlength && form.name.$touched">
+                    name must have at least 3 characters
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !(form.isbn.$valid)  && form.isbn.$touched}">
+            <label for="isbn" class="control-label col-xs-2">ISBN</label>
+            <div class="col-xs-5">
+                <input id="isbn" placeholder="ISBN" type="text" name="isbn" 
+                		class="form-control" ng-model="vm.book.isbn" 
+                		ng-pattern="'(978-)?[0-9]{1,5}-?[0-9]{1,7}-?[0-9]{1,6}-?[0-9]{1}'" ng-required="true" >
+                <span class="help-block" ng-show="form.isbn.$error.required && form.isbn.$touched">
+                    ISBN is required
+                </span>
+                <span class="help-block" ng-show="form.isbn.$error.pattern && form.isbn.$touched">
+                    wrong format of ISBN (correct format: 978-0-306-40165-7 or 9780306401657)
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !(form.amountOfBook.$valid) && form.amountOfBook.$touched}">
+            <label for="amountOfBook" class="control-label col-xs-2">Amount of book</label>
+            <div class="col-xs-5">
+                <input id="amountOfBook" placeholder="Amount of book" type="number" name="amountOfBook"
+                		min="1" class="form-control" ng-required="true" integer ng-model="vm.book.totalItems">
+                <span class="help-block" ng-show="form.amountOfBook.$error.required && form.amountOfBook.$touched">
+                    amount of book is required
+                </span>
+            	<span class="help-block" ng-show="form.amountOfBook.$error.min && form.amountOfBook.$touched">
+                    amount of book has to be at least 1
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button ng-disabled="!form.$valid" type="submit" class="btn btn-primary">Add Book</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -19,8 +19,8 @@ public class BorrowingDAO {
     @PersistenceContext(unitName = "persistenceUnit")
     private EntityManager em;
 
-    public void create(Borrowing book) {
-        em.persist(book);
+    public void create(Borrowing borrowing) {
+        em.persist(borrowing);
     }
 
     public Borrowing getById(Long id){
@@ -31,12 +31,12 @@ public class BorrowingDAO {
         return em.createQuery("SELECT b FROM Borrowing b", Borrowing.class).getResultList();
     }
 
-    public void update(Borrowing book) {
-        em.merge(book);
+    public void update(Borrowing borrowing) {
+        em.merge(borrowing);
     }
 
-    public void delete(Borrowing book) {
-        em.remove(em.merge(book));
+    public void delete(Borrowing borrowing) {
+        em.remove(em.merge(borrowing));
     }
 
 

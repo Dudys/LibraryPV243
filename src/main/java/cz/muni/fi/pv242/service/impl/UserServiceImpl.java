@@ -12,11 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.muni.fi.pv242.jms.JMSService;
+import cz.muni.fi.pv242.persistence.BookDAO;
+import cz.muni.fi.pv242.persistence.BorrowingDAO;
+import cz.muni.fi.pv242.persistence.ReservationDAO;
 import cz.muni.fi.pv242.persistence.UserDAO;
+import cz.muni.fi.pv242.rest.model.BorrowingCreateDTO;
+import cz.muni.fi.pv242.rest.model.BorrowingDTO;
+import cz.muni.fi.pv242.rest.model.ReservationCreateDTO;
+import cz.muni.fi.pv242.rest.model.ReservationDTO;
 import cz.muni.fi.pv242.rest.model.UserCreateDTO;
 import cz.muni.fi.pv242.rest.model.UserDTO;
 import cz.muni.fi.pv242.rest.model.UserUpdateDTO;
 import cz.muni.fi.pv242.service.UserService;
+import cz.muni.fi.pv242.persistence.entity.Book;
+import cz.muni.fi.pv242.persistence.entity.Borrowing;
+import cz.muni.fi.pv242.persistence.entity.Reservation;
 import cz.muni.fi.pv242.persistence.entity.User;
 
 /**
@@ -25,10 +35,19 @@ import cz.muni.fi.pv242.persistence.entity.User;
 @Stateless
 public class UserServiceImpl implements UserService{
 
-    @Inject
+	@Inject
     UserDAO userDao;
+    
+	@Inject 
+    ReservationDAO reservationDao;
+    
+	@Inject
+    BorrowingDAO borrowingDao;
+    
+	@Inject
+    BookDAO bookDao;
 
-    @Inject
+	@Inject
     JMSService jmsService;
 
     private Mapper mapper = new DozerBeanMapper();
@@ -81,9 +100,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean authenticate(long userId, String password) {
-        User usr = userDao.getById(userId);
-        return usr.getPasswordHash().equals(hashPassword(password));
+    public boolean authenticate(String email, String password) {
+        User u = userDao.getByEmail(email);
+        return u.getPasswordHash().equals(hashPassword(password));
     }
 
     private String hashPassword(String password)
@@ -122,5 +141,64 @@ public class UserServiceImpl implements UserService{
 		}
     	
     	return userDTOs;
+	}
+
+	@Override
+	public List<ReservationDTO> getReservationsOfUser(long userId) {
+		List<Reservation> reservations = userDao.getReservationsOfUser(userId);
+		List<ReservationDTO> reservationsDTO = new ArrayList<>();
+		for (Reservation reservation : reservations) {
+			reservationsDTO.add(mapper.map(reservation, ReservationDTO.class));
+		}
+		return reservationsDTO;
+	}
+
+	@Override
+	public List<BorrowingDTO> getBorrowingsOfUser(long userId) {
+		List<Borrowing> borrowings = userDao.getBorrowingsOfUser(userId);
+		List<BorrowingDTO> borrowingsDTO = new ArrayList<>();
+		for (Borrowing borrowing : borrowings) {
+			borrowingsDTO.add(mapper.map(borrowing, BorrowingDTO.class));
+		}
+		return borrowingsDTO;
+	}
+
+	@Override
+	public ReservationDTO addReservationToUser(long id, ReservationCreateDTO reservation) {
+		Reservation r = mapper.map(reservation, Reservation.class);
+		reservationDao.create(r);
+		User u = userDao.getById(id);
+		u.addReservation(r);
+		userDao.update(u);
+		return mapper.map(r, ReservationDTO.class);
+	}
+
+	@Override
+	public BorrowingDTO addBorrowingToUser(long id, BorrowingCreateDTO borrowing, long bookId) {
+		Borrowing b = mapper.map(borrowing, Borrowing.class);
+		borrowingDao.create(b);
+		User u = userDao.getById(id);
+		u.addBorrowing(b);
+		userDao.update(u);
+		Book book = bookDao.getById(bookId);
+		book.addBorrowing(b);
+		bookDao.update(book);
+		return mapper.map(b, BorrowingDTO.class);
+	}
+
+	@Override
+	public void removeReservationOfUser(long id, long reservationId) {
+		Reservation r = reservationDao.getById(reservationId);
+		User u = userDao.getById(id);
+		u.removeReservation(r);
+		reservationDao.delete(r);
+	}
+
+	@Override
+	public void removeBorrowingOfUser(long id, long borrowingId) {
+		Borrowing b = borrowingDao.getById(borrowingId);
+		User u = userDao.getById(id);
+		u.removeBorrowing(b);
+		borrowingDao.delete(b);
 	}
 }

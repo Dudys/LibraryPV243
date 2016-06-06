@@ -1,0 +1,114 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Create new user</h1>
+    </div>
+</div>
+<div class="container">
+    <form name="form"  novalidate class="form-horizontal" ng-submit="vm.addUser()">
+        <div class="form-group" ng-class="{'has-error': !(form.name.$valid) && form.name.$touched}">
+            <label for="name" class="control-label col-xs-2">First name</label>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" id="name" name="name" placeholder="First name of user"
+                	ng-minlength="2" ng-maxlength="50" ng-model="vm.user.name" ng-required="true" >
+                <span class="help-block" ng-show="form.name.$error.required && form.name.$touched">
+                        first name is required
+                </span>
+            	<span class="help-block" ng-show="(form.name.$error.minlength || form.name.$error.maxlength) && form.name.$touched">
+                    first name must have at least 2 and less then 50 characters
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !(form.surname.$valid) && form.surname.$touched}">
+            <label for="surname" class="control-label col-xs-2">Last name</label>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" id="surname" name="surname" placeholder="Last name of user"
+                	ng-minlength="2" ng-maxlength="50" ng-model="vm.user.surname" ng-required="true">
+                <span class="help-block" ng-show="form.surname.$error.required && form.surname.$touched">
+                    last name is required
+                </span>
+            	<span class="help-block" ng-show="(form.surname.$error.minlength || form.surname.$error.minlength) && form.surname.$touched">
+                    last name must have at least 2 and less then 50 characters
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !(form.email.$valid) && form.email.$touched}">
+            <label for="email" class="control-label col-xs-2">E-mail</label>
+            <div class="col-xs-5">
+                <input type="email" class="form-control" name="email" id="email" placeholder="E-mail"
+                	ng-model="vm.user.email" ng-pattern="'.+@.+\\....?'" ng-required="true" >
+                <span class="help-block" ng-show="form.email.$error.required && form.email.$touched">
+                    email is required
+                </span>
+                <span class="help-block" ng-show="form.email.$error.pattern && form.email.$touched">
+                    wrong format of email
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="enable" class="control-label col-xs-2" >Enabled</label>
+            <div class="col-md-2" id="enable">
+				<label class="radio-inline">
+  					<input type="radio" value="true" ng-model="vm.user.enabled"> Yes
+				</label> 
+            	<label class="radio-inline">
+  					<input type="radio" value="false" ng-model="vm.user.enabled"> No
+				</label>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !(form.age.$valid) && form.age.$touched}">
+            <label for="age" class="control-label col-xs-2" >Age</label>
+            <div class="col-md-5">
+                <input type="number" name="age" min="1" class="form-control" id="age" placeholder="Age"
+                       ng-required="true" integer ng-model="vm.user.age">
+                <span class="help-block" ng-show="form.age.$error.required && form.age.$touched">
+                    age is required
+                </span>
+            	<span class="help-block" ng-show="form.age.$error.min && form.age.$touched">
+                    age has to be at least 1
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="roles" class="control-label col-xs-2" >Roles</label>
+            <div class="col-md-5">
+    	        <div class="checkbox">
+    		        <label>
+  						<input type="checkbox" name="roles" ng-true-value="0" ng-model="vm.user.roles[0]"> 
+  						<span>Customer</span>
+					</label>
+				</div>
+				<div class="checkbox">
+    		        <label>
+  						<input type="checkbox" name="roles" ng-true-value="1" ng-model="vm.user.roles[1]"> 
+  						<span>Librarian</span>
+					</label>
+				</div>
+				<div class="checkbox">
+    		        <label>
+  						<input type="checkbox" name="roles" ng-true-value="2" ng-model="vm.user.roles[2]"> 
+  						<span>Admin</span>
+					</label>
+				</div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !(form.password.$valid) && form.password.$touched}">
+            <label for="password" class="control-label col-xs-2" >Password</label>
+            <div class="col-md-5">
+                <input id="password" class="form-control" placeholder="Password" name="password" type="password"
+                	ng-minlength="8" ng-model="vm.user.password" ng-required="true">
+                <span class="help-block" ng-show="form.password.$error.required && form.password.$touched">
+                    password is required
+                </span>
+            	<span class="help-block" ng-show="form.password.$error.minlength && form.password.$touched">
+                    password has to have at least 8 characters
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button ng-disabled="!form.$valid" type="submit" class="btn btn-primary">Add User</button>
+            </div>
+        </div>
+    </form>
+</div>

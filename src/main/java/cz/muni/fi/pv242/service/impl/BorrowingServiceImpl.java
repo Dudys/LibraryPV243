@@ -1,5 +1,6 @@
 package cz.muni.fi.pv242.service.impl;
 
+import cz.muni.fi.pv242.persistence.BookDAO;
 import cz.muni.fi.pv242.persistence.BorrowingDAO;
 import cz.muni.fi.pv242.persistence.entity.Book;
 import cz.muni.fi.pv242.persistence.entity.Borrowing;
@@ -13,14 +14,20 @@ import org.dozer.Mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  * Created by Jan Duda on 5/26/2016.
  */
+@Stateless
 public class BorrowingServiceImpl implements BorrowingService {
 
-    @Inject
+	@Inject
+	BookDAO bookDAO;
+	
+	@Inject
     BorrowingDAO borrowingDAO;
 
     private Mapper mapper = new DozerBeanMapper();

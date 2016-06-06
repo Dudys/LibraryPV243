@@ -20,7 +20,7 @@ import javax.inject.Inject;
 @Stateless
 public class BookServiceImpl implements BookService {
 
-    @Inject
+	@Inject
     BookDAO bookDAO;
 
     private Mapper mapper = new DozerBeanMapper();

@@ -3,7 +3,6 @@ package cz.muni.fi.pv242.service;
 
 import java.util.List;
 
-import cz.muni.fi.pv242.rest.model.ReservationCreateDTO;
 import cz.muni.fi.pv242.rest.model.ReservationDTO;
 
 /**
@@ -11,9 +10,7 @@ import cz.muni.fi.pv242.rest.model.ReservationDTO;
  */
 public interface ReservationService {
 
-    ReservationDTO createReservation(ReservationCreateDTO r);
     ReservationDTO updateReservation(ReservationDTO r);
-    void deleteReservation(ReservationDTO r);
     ReservationDTO getReservationByID(long id);
     List<ReservationDTO> getAllReservations();
 }

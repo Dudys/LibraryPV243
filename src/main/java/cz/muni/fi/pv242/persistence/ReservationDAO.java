@@ -18,8 +18,8 @@ public class ReservationDAO {
     @PersistenceContext(unitName = "persistenceUnit")
     private EntityManager em;
 
-    public void create(Reservation book) {
-        em.persist(book);
+    public void create(Reservation reservation) {
+        em.persist(reservation);
     }
 
     public Reservation getById(Long id){
@@ -27,15 +27,15 @@ public class ReservationDAO {
     }
 
     public List<Reservation> getAll(){
-        return em.createQuery("SELECT b FROM Reservation b", Reservation.class).getResultList();
+        return em.createQuery("SELECT r FROM Reservation r", Reservation.class).getResultList();
     }
 
-    public void update(Reservation book) {
-        em.merge(book);
+    public void update(Reservation reservation) {
+        em.merge(reservation);
     }
 
-    public void delete(Reservation book) {
-        em.remove(em.merge(book));
+    public void delete(Reservation reservation) {
+        em.remove(em.merge(reservation));
     }
 
 

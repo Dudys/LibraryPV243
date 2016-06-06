@@ -1,6 +1,7 @@
 package cz.muni.fi.pv242.rest.model;
 
 import cz.muni.fi.pv242.persistence.entity.Book;
+import cz.muni.fi.pv242.persistence.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

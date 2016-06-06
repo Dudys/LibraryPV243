@@ -1,17 +1,23 @@
 package cz.muni.fi.pv242.rest.impl;
 
+import cz.muni.fi.pv242.persistence.entity.Borrowing;
 import cz.muni.fi.pv242.rest.RestBookService;
 import cz.muni.fi.pv242.rest.model.BookCreateDTO;
 import cz.muni.fi.pv242.rest.model.BookDTO;
+import cz.muni.fi.pv242.rest.model.DateModel;
 import cz.muni.fi.pv242.service.BookService;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  * Created by Jan Duda on 5/26/2016.
  */
+@Stateless
 public class RestBookServiceImpl implements RestBookService {
 
     @Inject
@@ -41,4 +47,26 @@ public class RestBookServiceImpl implements RestBookService {
     public void deleteBook(long id) {
         bookService.deleteBook(bookService.getBookByID(id));
     }
+
+	@Override
+	public DateModel whenIsBookAvailable(long id) {
+		BookDTO book = bookService.getBookByID(id);
+		List<Borrowing> borrowings = book.getBorrowings();
+		DateModel borrowedTo = new DateModel();
+		if(borrowings.size() == book.getTotalItems()){
+			borrowedTo.setDate(borrowings.get(0).getEndDate());
+			for (int i = 1; i < borrowings.size(); i++){
+				if (borrowings.get(i).getStartDate().before(borrowedTo)){
+					borrowedTo.setDate(borrowings.get(i).getStartDate());
+				}
+			}
+		}
+		return borrowedTo;
+	}
+	
+	@Override
+	public boolean isBookAvailable(long id){
+		BookDTO book = bookService.getBookByID(id);
+		return book.getBorrowings().size() < book.getTotalItems();
+	}
 }

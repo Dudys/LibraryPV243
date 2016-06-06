@@ -6,11 +6,34 @@
     </div>
 </div>
 <div class="container">
-    <a href="#/users/add" class="btn btn-primary">
+    <a href="#/admin/users/add" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         Add User
     </a>
 </div>
+<div class="container" id="searchBoxes">
+	<form name="form" novalidate class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-3">Search user by id: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.id" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Search user by last name: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.surname" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Search book by email: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.email" class="form-control">
+			</div>
+		</div>
+	</form> 
+</div>
+		
 <div class="container">
     <table class="table table-striped">
         <thead>
@@ -25,7 +48,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="user in users">
+        <tr ng-repeat="user in vm.allUsers | filter:searchBoxes">
             <td>{{user.id}}</td>
             <td>{{user.name}} {{user.surname}}</td>
             <td>{{user.enabled | yesNo}}</td>
@@ -34,7 +57,7 @@
             <td><span ng-repeat="role in user.roles">{{role | lowercase}}, </span></td>
             <td>
             	<a href="#" class="btn btn-primary">Update</a> 
-            	<a href="enableUser(user)" class="btn btn-primary">Enable</a>
+            	<button ng-click="enableUser(user)" class="btn btn-primary" type="button">Enable</button>
             </td>
         </tr>
         </tbody>
