@@ -1,12 +1,11 @@
 package cz.muni.fi.pv242.persistence;
 
-
 import cz.muni.fi.pv242.persistence.entity.Reservation;
 
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import java.util.List;
 
 /**
@@ -23,7 +22,11 @@ public class ReservationDAO {
     }
 
     public Reservation getById(Long id){
-        return em.find(Reservation.class, id);
+    	try{
+    		return em.find(Reservation.class, id);
+    	} catch (Exception e){
+    		return null;
+    	}
     }
 
     public List<Reservation> getAll(){
@@ -38,6 +41,13 @@ public class ReservationDAO {
         em.remove(em.merge(reservation));
     }
 
-
+    public Reservation getByBook(long bookId){
+    	try {
+    		return em.createQuery("SELECT r FROM Reservation r WHERE r.reservedBook.id = :bookId", Reservation.class)
+    				.setParameter("bookId", bookId).getSingleResult();
+    	} catch (Exception e){
+    		return null;
+    	}
+    }
 
 }

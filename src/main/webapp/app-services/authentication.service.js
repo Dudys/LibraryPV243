@@ -17,6 +17,7 @@
         service.IsUserAdmin = IsUserAdmin;
         service.IsUserLoggedIn = IsUserLoggedIn;
         service.GetUsersName = GetUsersName;
+        service.GetCurrentUser = GetCurrentUser;
 
         return service;
 
@@ -84,6 +85,10 @@
         		return false;
         	}
         	return $rootScope.globals.currentUser.user.name + " " + $rootScope.globals.currentUser.user.surname;
+        }
+        
+        function GetCurrentUser(){
+        	return $rootScope.globals.currentUser.user;
         }
     }
 

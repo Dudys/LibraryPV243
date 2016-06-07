@@ -5,19 +5,22 @@
         .module('app')
         .controller('AddUserController', AddUserController);
 
-    AddUserController.$inject = ['UserService', '$location', '$rootScope', 'FlashService'];
-    function AddUserController(UserService, $location, $rootScope, FlashService) {
+    AddUserController.$inject = ['UserService', '$location', '$rootScope', 'FlashService', 'AuthenticationService'];
+    function AddUserController(UserService, $location, $rootScope, FlashService, AuthenticationService) {
         var vm = this;
+        vm.title = "Add New User";
         vm.user = {
                 'name': '',
                 'surname': '',
                 'email': '',
-                'roles': [],
+                'roles': [0],
                 'age': '',
-                'enabled': '',
+                'enabled': 'true',
                 'password': ''
             };
 
+        vm.isUserAdmin = AuthenticationService.IsUserAdmin();
+        
         vm.addUser = addUser;
 
         function addUser() {

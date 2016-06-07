@@ -1,7 +1,9 @@
 package cz.muni.fi.pv242.service.impl;
 
 import cz.muni.fi.pv242.persistence.ReservationDAO;
+import cz.muni.fi.pv242.persistence.UserDAO;
 import cz.muni.fi.pv242.persistence.entity.Reservation;
+import cz.muni.fi.pv242.persistence.entity.User;
 import cz.muni.fi.pv242.rest.model.ReservationDTO;
 import cz.muni.fi.pv242.service.ReservationService;
 import org.dozer.DozerBeanMapper;
@@ -21,6 +23,9 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Inject
     ReservationDAO reservationDAO;
+	
+	@Inject
+	UserDAO userDAO;
 
     private Mapper mapper = new DozerBeanMapper();
 
@@ -47,5 +52,29 @@ public class ReservationServiceImpl implements ReservationService {
 		}
     	
     	return reservationDTOs;
+	}
+	
+	@Override
+	public ReservationDTO getByBook(long bookId){
+		Reservation reservation = reservationDAO.getByBook(bookId);
+		if (reservation == null){
+			return null;
+		}
+		return mapper.map(reservation, ReservationDTO.class);
+	}
+	
+	@Override
+	public void deleteReservation(long id){
+		Reservation reservation = reservationDAO.getById(id);
+		
+		List<User> users = userDAO.getAll();
+    	for (User user : users) {
+			if(user.getReservations().contains(reservation)){
+				user.getReservations().remove(reservation);
+				userDAO.update(user);
+				break;
+			}
+		}
+    	reservationDAO.delete(reservation);
 	}
 }

@@ -7,8 +7,6 @@ import javax.persistence.PersistenceContextType;
 
 import java.util.List;
 
-import cz.muni.fi.pv242.persistence.entity.Borrowing;
-import cz.muni.fi.pv242.persistence.entity.Reservation;
 import cz.muni.fi.pv242.persistence.entity.User;
 
 /**
@@ -44,16 +42,6 @@ public class UserDAO {
 
     public void delete(User user) {
         em.remove(em.merge(user));
-    }
-
-    public List<Reservation> getReservationsOfUser(long id){
-    	return em.createQuery("SELECT u.reservations FROM User u WHERE u.id = :id", Reservation.class)
-    			.setParameter("id", id).getResultList();
-    }
-    
-    public List<Borrowing> getBorrowingsOfUser(long id){
-    	return em.createQuery("SELECT u.borrowings FROM User u WHERE u.id = :id", Borrowing.class)
-    			.setParameter("id", id).getResultList();
     }
 
 }

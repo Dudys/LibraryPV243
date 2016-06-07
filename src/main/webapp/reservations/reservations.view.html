@@ -2,7 +2,7 @@
 <html lang="en">
 <div class="container">
     <div class="page-header">
-        <h1>Reservations</h1>
+        <h1>{{ vm.title }}</h1>
     </div>
 </div>
 <div class="container" id="searchBoxes">
@@ -38,14 +38,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="reservation in vm.usersReservations | filter:searchBoxes">
+        <tr ng-repeat="reservation in vm.reservations | filter:searchBoxes">
             <td>{{reservation.id}}</td>
             <td>{{reservation.reservedBook.name}}</td>
             <td>{{reservation.reservationDate | date:'dd.MM.yyyy'}}</td>
             <td>{{reservation.borrowingDate | date:'dd.MM.yyyy'}}</td>
             <td>
-            	<button ng-click="cancelReservation(reservation)" class="btn btn-primary" type="button">Cancel</button> 
-            	<button ng-click="borrowBook(reservation)" class="btn btn-primary" type="button">Borrow</button>
+            	<button ng-click="vm.borrowBook(reservation)" class="btn btn-primary" type="button">Borrow</button>
+            	<button ng-click="vm.cancelReservation(reservation)" class="btn btn-primary" type="button">Cancel</button> 
             </td>
         </tr>
         </tbody>

@@ -27,4 +27,8 @@ public interface RestReservationService {
     @PUT
     @Path("/update")
     ReservationDTO updateReservation(ReservationDTO updatedResetvation);
+    
+    @DELETE
+    @Path("/{id}/delete")
+    void deleteReservation(@PathParam("id") long id);
 }

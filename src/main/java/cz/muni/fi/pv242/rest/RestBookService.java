@@ -42,7 +42,7 @@ public interface RestBookService {
 
     @DELETE
     @Path("/{id}/delete")
-    void deleteBook(@PathParam("id") long id);
+    boolean deleteBook(@PathParam("id") long id);
     
     @GET
     @Path("/{id}/available")
@@ -51,4 +51,8 @@ public interface RestBookService {
     @GET
     @Path("/{id}/isavailable")
     boolean isBookAvailable(@PathParam("id") long id);
+    
+    @GET
+    @Path("/{id}/canbereserved")
+    boolean canBookBeReserved(@PathParam("id") long id);
 }

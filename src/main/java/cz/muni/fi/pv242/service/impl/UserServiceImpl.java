@@ -93,10 +93,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void disableUser(long id) {
+    public boolean disableUser(long id) {
         User usr = userDao.getById(id);
+    	if(usr.getBorrowings().size() != 0){
+    		return false;
+    	}
+    	List<Reservation> reservations = usr.getReservations();
+    	usr.setReservations(new ArrayList<Reservation>());
+    	if(reservations.size() != 0){
+    		for (Reservation reservation : reservations) {
+        		reservationDao.delete(reservation);
+        		reservation = null;
+			}
+    	}
         usr.setEnabled(false);
         userDao.update(usr);
+        return true;
     }
 
     @Override
@@ -145,7 +157,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<ReservationDTO> getReservationsOfUser(long userId) {
-		List<Reservation> reservations = userDao.getReservationsOfUser(userId);
+		List<Reservation> reservations = userDao.getById(userId).getReservations();
 		List<ReservationDTO> reservationsDTO = new ArrayList<>();
 		for (Reservation reservation : reservations) {
 			reservationsDTO.add(mapper.map(reservation, ReservationDTO.class));
@@ -155,10 +167,14 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<BorrowingDTO> getBorrowingsOfUser(long userId) {
-		List<Borrowing> borrowings = userDao.getBorrowingsOfUser(userId);
+		List<Borrowing> borrowings = userDao.getById(userId).getBorrowings();
 		List<BorrowingDTO> borrowingsDTO = new ArrayList<>();
 		for (Borrowing borrowing : borrowings) {
-			borrowingsDTO.add(mapper.map(borrowing, BorrowingDTO.class));
+			BorrowingDTO b = mapper.map(borrowing, BorrowingDTO.class);
+	        
+    		Book book = getBookOfBorrowing(borrowing);
+    		b.setBorrowedBook(book);
+    		borrowingsDTO.add(b);
 		}
 		return borrowingsDTO;
 	}
@@ -189,9 +205,9 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void removeReservationOfUser(long id, long reservationId) {
 		Reservation r = reservationDao.getById(reservationId);
+		reservationDao.delete(r);
 		User u = userDao.getById(id);
 		u.removeReservation(r);
-		reservationDao.delete(r);
 	}
 
 	@Override
@@ -200,5 +216,15 @@ public class UserServiceImpl implements UserService{
 		User u = userDao.getById(id);
 		u.removeBorrowing(b);
 		borrowingDao.delete(b);
+	}
+	
+	private Book getBookOfBorrowing(Borrowing borrowing){
+		List<Book> books = bookDao.getAll();
+		for (Book book : books) {
+			if(book.getBorrowings().contains(borrowing)){
+				return book;
+			}
+		}
+		return null;
 	}
 }

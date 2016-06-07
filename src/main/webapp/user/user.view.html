@@ -56,8 +56,8 @@
             <td>{{user.email}}</td>
             <td><span ng-repeat="role in user.roles">{{role | lowercase}}, </span></td>
             <td>
-            	<a href="#" class="btn btn-primary">Update</a> 
-            	<button ng-click="enableUser(user)" class="btn btn-primary" type="button">Enable</button>
+            	<button ng-click="vm.enableUser(user)" ng-if="!user.enabled" class="btn btn-primary" type="button">Enable</button>
+            	<button ng-click="vm.disableUser(user)" ng-if="user.enabled" class="btn btn-primary" type="button">Disable</button>
             </td>
         </tr>
         </tbody>

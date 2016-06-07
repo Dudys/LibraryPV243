@@ -25,7 +25,6 @@ public class Reservation {
     private Book reservedBook;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Future
     private java.util.Calendar reservationDate;
 
     @Temporal(TemporalType.TIMESTAMP)

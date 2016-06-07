@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.PathParam;
 
 /**
  * Created by Jan Duda on 5/26/2016.
@@ -32,5 +33,10 @@ public class RestReservationServiceImpl implements RestReservationService {
 	@Override
 	public List<ReservationDTO> getAllReservations() {
 		return reservationService.getAllReservations();
+	}
+	
+	@Override
+	public void deleteReservation(long id){
+		reservationService.deleteReservation(id);
 	}
 }

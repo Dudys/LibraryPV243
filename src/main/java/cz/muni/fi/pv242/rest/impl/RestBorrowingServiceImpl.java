@@ -43,4 +43,9 @@ public class RestBorrowingServiceImpl implements RestBorrowingService {
 	public List<BorrowingDTO> getAllBorrowings() {
 		return borrowingService.getAllBorrowings();
 	}
+	
+	@Override
+	public BorrowingDTO addBorrowingFromReservation(long reservationId, BorrowingCreateDTO borrowing){
+		return borrowingService.addBorrowingFromReservation(reservationId, borrowing);
+	}
 }

@@ -16,18 +16,39 @@
             })
             
             .when('/books/add', {
+            	resolve: {
+            		"check" : function($location, AuthenticationService){
+            					if(!AuthenticationService.IsUserAdmin() && !AuthenticationService.IsUserLibrarian()){
+            						$location.path('/books');
+            					}
+            				}
+            	},
             	controller: "AddBookController",
             	templateUrl: 'add_book/addbook.view.html',
             	controllerAs: 'vm'
             })
             
             .when('/admin/users', {
+            	resolve: {
+            		"check" : function($location, AuthenticationService){
+            					if(!AuthenticationService.IsUserAdmin() && !AuthenticationService.IsUserLibrarian()){
+            						$location.path('/books');
+            					}
+            				}
+            	},
             	controller: "UserController",
             	templateUrl: 'user/user.view.html',
             	controllerAs: 'vm'
             })
             
             .when('/admin/users/add', {
+            	resolve: {
+            		"check" : function($location, AuthenticationService){
+            					if(!AuthenticationService.IsUserAdmin() && !AuthenticationService.IsUserLibrarian()){
+            						$location.path('/books');
+            					}
+            				}
+            	},
             	controller: "AddUserController",
             	templateUrl: 'add_user/add_user.view.html',
             	controllerAs: 'vm'
@@ -35,13 +56,39 @@
             
             .when('/reservations', {
             	controller: "UsersReservationsController",
-            	templateUrl: 'users_reservations/users_reservations.view.html',
+            	templateUrl: 'reservations/reservations.view.html',
             	controllerAs: 'vm'
             })
             
             .when('/borrowings', {
             	controller: "UsersBorrowingsController",
-            	templateUrl: 'users_borrowings/users_borrowings.view.html',
+            	templateUrl: 'borrowings/borrowings.view.html',
+            	controllerAs: 'vm'
+            })
+            
+            .when('/librarian/reservations', {
+            	resolve: {
+            		"check" : function($location, AuthenticationService){
+            					if(!AuthenticationService.IsUserLibrarian()){
+            						$location.path('/books');
+            					}
+            				}
+            	},
+            	controller: "AllReservationsController",
+            	templateUrl: 'reservations/reservations.view.html',
+            	controllerAs: 'vm'
+            })
+            
+            .when('/librarian/borrowings', {
+            	resolve: {
+            		"check" : function($location, AuthenticationService){
+            					if(!AuthenticationService.IsUserLibrarian()){
+            						$location.path('/books');
+            					}
+            				}
+            	},
+            	controller: "AllBorrowingsController",
+            	templateUrl: 'borrowings/borrowings.view.html',
             	controllerAs: 'vm'
             })
 

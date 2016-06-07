@@ -59,8 +59,8 @@ public class RestUserServiceImpl implements RestUserService {
     }
 
     @Override
-    public void disableUser(long id) {
-        userService.disableUser(id);
+    public boolean disableUser(long id) {
+        return userService.disableUser(id);
 
     }
 

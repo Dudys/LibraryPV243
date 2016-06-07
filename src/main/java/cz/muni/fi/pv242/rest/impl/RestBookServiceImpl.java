@@ -6,6 +6,7 @@ import cz.muni.fi.pv242.rest.model.BookCreateDTO;
 import cz.muni.fi.pv242.rest.model.BookDTO;
 import cz.muni.fi.pv242.rest.model.DateModel;
 import cz.muni.fi.pv242.service.BookService;
+import cz.muni.fi.pv242.service.ReservationService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,9 @@ public class RestBookServiceImpl implements RestBookService {
 
     @Inject
     BookService bookService;
+    
+    @Inject
+    ReservationService reservationService;
     
     @Override
     public List<BookDTO> getAllBooks(){
@@ -44,8 +48,8 @@ public class RestBookServiceImpl implements RestBookService {
     }
 
     @Override
-    public void deleteBook(long id) {
-        bookService.deleteBook(bookService.getBookByID(id));
+    public boolean deleteBook(long id) {
+        return bookService.deleteBook(id);
     }
 
 	@Override
@@ -67,6 +71,12 @@ public class RestBookServiceImpl implements RestBookService {
 	@Override
 	public boolean isBookAvailable(long id){
 		BookDTO book = bookService.getBookByID(id);
-		return book.getBorrowings().size() < book.getTotalItems();
+		return (book.getBorrowings().size() <  book.getTotalItems());
+	}
+	
+	@Override
+	public boolean canBookBeReserved(long id){
+		BookDTO book = bookService.getBookByID(id);
+		return ((book.getTotalItems() - book.getBorrowings().size()) == 0) && (reservationService.getByBook(id) == null);
 	}
 }

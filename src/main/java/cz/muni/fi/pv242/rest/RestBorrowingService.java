@@ -35,4 +35,8 @@ public interface RestBorrowingService {
     @DELETE
     @Path("/{id}/delete")
     void deleteBorrowing(@PathParam("id") long id);
+    
+    @POST
+    @Path("/add/{reservationId}")
+    BorrowingDTO addBorrowingFromReservation(@PathParam("reservationId") long id, BorrowingCreateDTO borrowing);
 }

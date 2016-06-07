@@ -32,7 +32,7 @@ public interface RestUserService {
 
     @PUT
     @Path("/{id}/disable")
-    void disableUser(@PathParam("id") long id);
+    boolean disableUser(@PathParam("id") long id);
 
     @PUT
     @Path("/{id}/enable")

@@ -15,6 +15,7 @@
         service.UpdateBook = UpdateBook;
         service.whenIsBookAvailable = whenIsBookAvailable;
         service.isBookAvailable = isBookAvailable;
+        service.canBookBeReserved = canBookBeReserved;
         service.DeleteBook = DeleteBook;
 
         return service;
@@ -42,9 +43,13 @@
         function isBookAvailable(id) {
             return $http.get('/library/rest/books/' + id + '/isavailable').then(handleSuccess, handleError('Error getting book availability'));
         }
+        
+        function canBookBeReserved(id) {
+            return $http.get('/library/rest/books/' + id + '/canbereserved').then(handleSuccess, handleError('Error getting book availability'));
+        }
 
         function DeleteBook(id) {
-            return $http.delete('/library/rest/books/' + id + '/delete').then(handleSuccess, handleError('Error enabling book'));
+            return $http.delete('/library/rest/books/' + id + '/delete').then(handleSuccess, handleError('Error deleting book'));
         }
 
         function handleSuccess(res) {

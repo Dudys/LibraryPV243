@@ -30,7 +30,7 @@
             			FlashService.Success('You are logged in', true);
             			$location.path('/books');
             		} else {
-            			FlashService.Error(response);
+            			FlashService.Error("Wrong email or password!");
             			vm.dataLoading = false;
             		}
             	});

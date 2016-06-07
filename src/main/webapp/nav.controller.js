@@ -5,8 +5,8 @@
         .module('app')
         .controller('NavController', NavController);
 
-    NavController.$inject = ['AuthenticationService'];
-    function NavController(AuthenticationService) {
+    NavController.$inject = ['AuthenticationService', '$rootScope'];
+    function NavController(AuthenticationService, $rootScope) {
         var nav = this;
 
         nav.isUserCustomer = isUserCustomer;
@@ -14,6 +14,8 @@
         nav.isUserAdmin = isUserAdmin;
         nav.isUserLoggedIn = isUserLoggedIn;
         nav.getUsersName = getUsersName;
+        nav.getCurrentUser = getCurrentUser;
+        nav.setUserToUpdate = setUserToUpdate; 
 
         function isUserCustomer(){
         	return AuthenticationService.IsUserCustomer();
@@ -33,6 +35,14 @@
         
         function getUsersName(){
         	return AuthenticationService.GetUsersName();
+        }
+        
+        function getCurrentUser(){
+        	return AuthenticationService.GetCurrentUser();
+        }
+        
+        function setUserToUpdate(user){
+        	$rootScope.globals.userToUpdate = user;
         }
     }
 

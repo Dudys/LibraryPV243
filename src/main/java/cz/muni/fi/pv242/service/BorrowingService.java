@@ -15,4 +15,5 @@ public interface BorrowingService {
     void deleteBorrowing(BorrowingDTO b);
     BorrowingDTO getBorrowingByID(long id);
     List<BorrowingDTO> getAllBorrowings();
+    BorrowingDTO addBorrowingFromReservation(long reservationId, BorrowingCreateDTO b);
 }

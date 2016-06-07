@@ -46,11 +46,11 @@
         }
 
         function EnableUser(id) {
-            return $http.post('/library/rest/users/' + id + '/enable').then(handleSuccess, handleError('Error enabling user'));
+            return $http.put('/library/rest/users/' + id + '/enable').then(handleSuccess, handleError('Error enabling user'));
         }
         
         function DisableUser(id) {
-            return $http.post('/library/rest/users/' + id + '/disable').then(handleSuccess, handleError('Error disabling user'));
+            return $http.put('/library/rest/users/' + id + '/disable').then(handleSuccess, handleError('Error disabling user'));
         }
         
         function GetReservationsOfUser(id){
@@ -67,17 +67,17 @@
         }
         
         function AddBorrowingToUser(id, borrowing, bookId){
-        	return $http.post('/library/rest/users/' + id + '/remove/borrowing/' + bookId, borrowing)
+        	return $http.post('/library/rest/users/' + id + '/add/borrowing/' + bookId, borrowing)
         		.then(handleSuccess, handleError('Error adding borrowing to user'));
         }
         
         function RemoveReservationOfUser(id, reservationId){
-        	return $http.delete('/library/rest/users/' + id + '/remove/reservation/' + reservationId)
+        	return $http.delete('/library/rest/users/' + id + '/delete/reservation/' + reservationId)
     			.then(handleSuccess, handleError('Error removing reservation of user'));
         }
         
         function RemoveBorrowingOfUser(id, borrowingId){
-        	return $http.delete('/library/rest/users/' + id + '/remove/borrowing/' + borrowingId)
+        	return $http.delete('/library/rest/users/' + id + '/delete/borrowing/' + borrowingId)
     			.then(handleSuccess, handleError('Error removing borrowing of user'));
         }
 

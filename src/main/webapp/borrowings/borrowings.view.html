@@ -2,7 +2,7 @@
 <html lang="en">
 <div class="container">
     <div class="page-header">
-        <h1>Borrowings</h1>
+        <h1>{{ vm.title }}</h1>
     </div>
 </div>
 <div class="container" id="searchBoxes">
@@ -31,24 +31,23 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>id</th>
-            <!--<th>Book</th>
-            <th>ISBN</th>-->
+            <th>borrowing id</th>
+            <th>Book</th>
+            <th>ISBN</th>
             <th>Borrowings from</th>
             <th>Borrowings to</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="borrowing in vm.usersBorrowings | filter:searchBoxes">
+        <tr ng-repeat="borrowing in vm.borrowings | filter:searchBoxes">
             <td>{{borrowing.id}}</td>
-            <!--<td>{{borrowing.name}}</td>
-            <td>{{borrowing.isbn}}</td>-->
+            <td>{{borrowing.borrowedBook.name}}</td>
+            <td>{{borrowing.borrowedBook.isbn}}</td>
             <td>{{borrowing.startDate | date:'dd.MM.yyyy'}}</td>
             <td>{{borrowing.endDate | date:'dd.MM.yyyy'}}</td>
             <td>
-            	<a href="#" class="btn btn-primary">Update</a> 
-            	<button ng-click="returnBook(borrowing)" class="btn btn-primary" type="button">Return</button>
+            	<button ng-if="vm.isLibrarian" ng-click="vm.returnBook(borrowing.id)" class="btn btn-primary" type="button">Return</button>
             </td>
         </tr>
         </tbody>

@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Library</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -16,7 +17,7 @@
                 	<span class="icon-bar"></span>
                 	<span class="icon-bar"></span>
             	</button>
-        	    <a class="navbar-brand" href="#/">Library</a>
+        	    <a class="navbar-brand" href="#/books">Library</a>
     	    </div>
 
 	        <div class="collapse navbar-collapse" id="navbar" ng-if="nav.isUserLoggedIn()">
@@ -54,16 +55,20 @@
     <script src="app-services/book.service.js"></script>
 	<script src="app-services/user.service.js"></script>
 	<script src="app-services/filters.js"></script>
+	<script src="app-services/reservation.service.js"></script>
+	<script src="app-services/borrowing.service.js"></script>
 	
 	<script src="nav.controller.js"></script>
 	<script src="add_user/add_user.controller.js"></script>
-	<script src="users_borrowings/users_borrowings.controller.js"></script>
-	<script src="users_reservations/users_reservations.controller.js"></script>
+	<script src="borrowings/users_borrowings.controller.js"></script>
+	<script src="reservations/users_reservations.controller.js"></script>
 	<script src="user/user.controller.js"></script>
 	<script src="add_book/add_book.controller.js"></script>
     <script src="book/book.controller.js"></script>
     <script src="home/home.controller.js"></script>
     <script src="login/login.controller.js"></script>
     <script src="register/register.controller.js"></script>
+    <script src="reservations/all_reservations.controller.js"></script>
+    <script src="borrowings/all_borrowings.controller.js"></script>    
 </body>
 </html>

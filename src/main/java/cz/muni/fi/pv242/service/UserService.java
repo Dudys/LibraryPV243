@@ -22,7 +22,7 @@ public interface UserService {
     UserDTO getUserById(long id);
     UserDTO getUserByEmail(String email);
     void enableUser(long u);
-    void disableUser(long u);
+    boolean disableUser(long u);
     boolean authenticate(String email, String password);
     List<UserDTO> getAllUsers();
     List<ReservationDTO> getReservationsOfUser(long userId);
