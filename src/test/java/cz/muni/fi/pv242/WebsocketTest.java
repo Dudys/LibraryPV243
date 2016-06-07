@@ -65,7 +65,7 @@ public class WebsocketTest {
 
 
 			// open websocket
-			final WebsocketClientEndpoint clientTestEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/library-1.0-SNAPSHOT/books"));
+			final WebsocketClientEndpoint clientTestEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/library/books"));
 
 
 
