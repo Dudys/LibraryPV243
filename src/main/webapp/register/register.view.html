@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Sign Up</h3>
+            </div>
+            <div class="panel-body">
+                <form role="form" ng-submit="vm.register()" novalidate name="form">
+                    <fieldset>
+                        <div class="form-group" ng-class="{'has-error': (!(form.name.$valid) && form.name.$touched) ||
+                                (!(form.surname.$valid) && form.surname.$touched)}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="First name"
+                						ng-minlength="2" ng-maxlength="50" ng-model="vm.user.name" ng-required="true" >
+                                <input class="form-control" placeholder="Last name" name="surname" type="text"
+                                       ng-minlength="2" ng-maxlength="50" ng-model="vm.user.surname" ng-required="true">
+                            </div>
+                            <div class="col-md-offset-1">
+                                <span class="help-block" ng-show="form.name.$error.required && form.name.$touched">
+                                    first name is required
+                                </span>
+                                <span class="help-block" ng-show="form.name.$error.minlength && form.name.$touched">
+                                    first name must have at least 2 characters
+                                </span>
+                                <span class="help-block" ng-show="form.surname.$error.required && form.surname.$touched">
+                                    last name is required
+                                </span>
+                                <span class="help-block" ng-show="form.surname.$error.minlength && form.surname.$touched">
+                                    last name name must have at least 2 characters
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': !(form.email.$valid) && form.email.$touched}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="E-mail"
+                					ng-model="vm.user.email" ng-pattern="'.+@.+\\....?'" ng-required="true" >
+                            </div>
+                            <div class="col-md-offset-1">
+                                <span class="help-block" ng-show="form.email.$error.required && form.email.$touched">
+                                    email is required
+                                </span>
+                                <span class="help-block" ng-show="form.email.$error.pattern && form.email.$touched">
+                                    wrong format of e-mail
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': !(form.age.$valid) && form.age.$touched}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input type="number" name="age" class="form-control" id="age" placeholder="Age"
+                                       ng-required="true" ng-model="vm.user.age">
+                            </div>
+                            <div class="col-md-offset-1">
+                                <span class="help-block" ng-show="form.age.$error.required && form.age.$touched">
+                                    age is required
+                                </span>
+            	                <span class="help-block" ng-show="form.age.$error.min && form.age.$touched">
+                                    age has to be at least 1
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !(form.password.$valid) && form.password.$touched}">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input id="password" class="form-control" placeholder="Password" name="password" type="password"
+                                       ng-minlength="8" ng-model="vm.user.password" ng-required="true">
+                            </div>
+                            <div class="col-md-offset-1">
+                                <span class="help-block" ng-show="form.password.$error.required && form.password.$touched">
+                                    password is required
+                                </span>
+            	                <span class="help-block" ng-show="form.password.$error.minlength && form.password.$touched">
+                                    password has to have at least 8 characters
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+            				<button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button>
+            				<img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            				<a href="#/login" class="btn btn-link">Cancel</a>
+        				</div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

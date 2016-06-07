@@ -76,6 +76,22 @@ public class User {
     public void disableUser(){
         enabled = false;
     }
+    
+    public void addReservation(Reservation r){
+    	reservations.add(r);
+    }
+    
+    public void addBorrowing(Borrowing b){
+    	borrowings.add(b);
+    }
+    
+    public void removeReservation(Reservation r){
+    	reservations.remove(r);
+    }
+    
+    public void removeBorrowing(Borrowing b){
+    	borrowings.remove(b);
+    }
 
     @Override
     public boolean equals(Object o) {

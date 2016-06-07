@@ -1,7 +1,9 @@
 package cz.muni.fi.pv242.service.impl;
 
 import cz.muni.fi.pv242.persistence.BookDAO;
+import cz.muni.fi.pv242.persistence.ReservationDAO;
 import cz.muni.fi.pv242.persistence.entity.Book;
+import cz.muni.fi.pv242.persistence.entity.Reservation;
 import cz.muni.fi.pv242.rest.model.BookCreateDTO;
 import cz.muni.fi.pv242.rest.model.BookDTO;
 import cz.muni.fi.pv242.service.BookService;
@@ -20,8 +22,11 @@ import javax.inject.Inject;
 @Stateless
 public class BookServiceImpl implements BookService {
 
-    @Inject
+	@Inject
     BookDAO bookDAO;
+	
+	@Inject
+	ReservationDAO reservationDAO;
 
     private Mapper mapper = new DozerBeanMapper();
 
@@ -43,8 +48,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(BookDTO b) {
-        bookDAO.delete(mapper.map(b, Book.class));
+    public boolean deleteBook(long id) {
+    	Reservation reservation = reservationDAO.getByBook(id);
+		if(reservation != null){
+			//reservationDAO.delete(reservation);
+			return false;
+		}
+		
+		Book book = bookDAO.getById(id);
+    	if(book.getBorrowings().size() != 0){
+    		return false;
+    	}
+		bookDAO.delete(book);
+		
+    	return true;
     }
 
     @Override

@@ -1,0 +1,126 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Books</h1>
+    </div>
+</div>
+<div class="container" ng-if="vm.isUserAdmin || vm.isUserLibrarian">
+    <a href="#/books/add" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add Book
+    </a>
+</div>
+<div class="container" id="searchBoxes">
+	<form name="form" novalidate class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by id: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.id" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by book's name: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.name" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by ISBN: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBox.isbn" class="form-control">
+			</div>
+		</div>
+	</form> 
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Book</th>
+            <th>ISBN</th>
+            <th>Free books</th>
+            <th ng-if="vm.isUserCustomer">User's Actions</th>
+            <th ng-if="vm.isUserLibrarian">Librarian's Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="book in vm.allBooks | filter:searchBoxes">
+            <td>{{book.id}}</td>
+            <td>{{book.name}}</td>
+            <td>{{book.isbn}}</td>
+            <td>{{book.totalItems - book.borrowings.length}}</td>
+            <td ng-if="vm.isUserCustomer">
+                <button ng-click="vm.reserveBook(book)" class="btn btn-primary" type="button">Reserve</button>
+                <button ng-click="vm.borrowBook(book)" class="btn btn-primary" type="button">Borrow</button>
+                
+            </td>
+            <td ng-if="vm.isUserLibrarian">
+            	<button ng-click="vm.deleteBook(book)" class="btn btn-primary" type="button">Delete</button>
+            	<button type="button" ng-click="vm.loadUsers(book)" class="btn btn-primary" data-toggle="modal"  data-target=".bs-example-modal-lg">Borrow To</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    
+    
+    <!-- popup window for choosing customer for book -->
+	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  		<div class="modal-dialog modal-lg">
+    		<div class="modal-content">
+    			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        			<h4 class="modal-title" id="myModalLabel">Choose a user</h4>
+      			</div>
+      			<div class="modal-body">
+      				<div class="container" id="searchBoxes">
+						<form name="form" novalidate class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-xs-3">Search user by id: </label>
+								<div class="col-xs-3">
+									<input type="text" ng-model="searchBoxes.id" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-3">Search user by last name: </label>
+								<div class="col-xs-3">
+									<input type="text" ng-model="searchBoxes.surname" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-3">Search book by email: </label>
+								<div class="col-xs-3">
+									<input type="text" ng-model="searchBoxes.email" class="form-control">
+								</div>
+							</div>
+						</form> 
+					</div>
+        			<table class="table table-striped">
+        				<thead>
+        					<tr>
+            					<th>id</th>
+            					<th>Name</th>	
+            					<th>E-mail</th>
+            					<th></th>
+        					</tr>
+        				</thead>
+        				<tbody>
+        					<tr ng-repeat="user in vm.allUsers | filter:searchBoxes" ng-if="user.roles.indexOf('CUSTOMER')!=-1">
+            					<td>{{user.id}}</td>
+            					<td>{{user.name}} {{user.surname}}</td>
+            					<td>{{user.email}}</td>
+            					<td> 
+            						<button data-dismiss="modal" ng-click="vm.borrowBookToUser(vm.bookForBorrowing,user)" class="btn btn-primary" type="button">
+            							Borrow
+            						</button>
+            					</td>
+        					</tr>
+        				</tbody>
+    				</table>
+      			</div>
+      			<div class="modal-footer">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+</div>

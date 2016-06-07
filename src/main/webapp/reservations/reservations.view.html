@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="container">
+    <div class="page-header">
+        <h1>{{ vm.title }}</h1>
+    </div>
+</div>
+<div class="container" id="searchBoxes">
+	<form name="form" novalidate class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by id: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.id" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by book's name: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.reservedBook.name" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by book is borrowed to: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBox.borrowingDate" class="form-control">
+			</div>
+		</div>
+	</form> 
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Book</th>
+            <th>Reservation from</th>
+            <th>Book is borrowed to</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="reservation in vm.reservations | filter:searchBoxes">
+            <td>{{reservation.id}}</td>
+            <td>{{reservation.reservedBook.name}}</td>
+            <td>{{reservation.reservationDate | date:'dd.MM.yyyy'}}</td>
+            <td>{{reservation.borrowingDate | date:'dd.MM.yyyy'}}</td>
+            <td>
+            	<button ng-click="vm.borrowBook(reservation)" class="btn btn-primary" type="button">Borrow</button>
+            	<button ng-click="vm.cancelReservation(reservation)" class="btn btn-primary" type="button">Cancel</button> 
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

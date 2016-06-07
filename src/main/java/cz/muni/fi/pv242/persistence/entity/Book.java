@@ -29,6 +29,10 @@ public class Book {
 
     @OneToMany
     private List<Borrowing> borrowings;
+    
+    public void addBorrowing(Borrowing b){
+    	borrowings.add(b);
+    }
 
     @Override
     public boolean equals(Object o) {

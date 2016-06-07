@@ -11,7 +11,7 @@ import cz.muni.fi.pv242.rest.model.BookDTO;
 public interface BookService {
     BookDTO createBook(BookCreateDTO b);
     BookDTO updateBook(BookDTO b);
-    void deleteBook(BookDTO b);
+    boolean deleteBook(long id);
     BookDTO getBookByID(long id);
     List<BookDTO> getAllBooks();
 }

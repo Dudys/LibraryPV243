@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import cz.muni.fi.pv242.persistence.entity.Book;
+
 /**
  * Created by honza on 5/18/16.
  */

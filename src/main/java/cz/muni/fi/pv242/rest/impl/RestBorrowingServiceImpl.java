@@ -7,11 +7,13 @@ import cz.muni.fi.pv242.service.BorrowingService;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  * Created by Jan Duda on 5/26/2016.
  */
+@Stateless
 public class RestBorrowingServiceImpl implements RestBorrowingService {
 
     @Inject
@@ -40,5 +42,10 @@ public class RestBorrowingServiceImpl implements RestBorrowingService {
 	@Override
 	public List<BorrowingDTO> getAllBorrowings() {
 		return borrowingService.getAllBorrowings();
+	}
+	
+	@Override
+	public BorrowingDTO addBorrowingFromReservation(long reservationId, BorrowingCreateDTO borrowing){
+		return borrowingService.addBorrowingFromReservation(reservationId, borrowing);
 	}
 }

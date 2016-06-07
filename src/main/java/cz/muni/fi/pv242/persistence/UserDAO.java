@@ -28,12 +28,12 @@ public class UserDAO {
     }
 
     public User getByEmail(String email){
-        return em.createQuery("SELECT b FROM User b where b.email = :email", User.class)
+        return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
                 .setParameter("email",email).getSingleResult();
     }
 
     public List<User> getAll(){
-        return em.createQuery("SELECT b FROM User b", User.class).getResultList();
+        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     public void update(User user) {
@@ -43,7 +43,5 @@ public class UserDAO {
     public void delete(User user) {
         em.remove(em.merge(user));
     }
-
-
 
 }

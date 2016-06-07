@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="container">
+    <div class="page-header">
+        <h1>Users</h1>
+    </div>
+</div>
+<div class="container">
+    <a href="#/admin/users/add" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add User
+    </a>
+</div>
+<div class="container" id="searchBoxes">
+	<form name="form" novalidate class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-3">Search user by id: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.id" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Search user by last name: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.surname" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Search book by email: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.email" class="form-control">
+			</div>
+		</div>
+	</form> 
+</div>
+		
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Enabled</th>
+            <th>Age</th>
+            <th>E-mail</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in vm.allUsers | filter:searchBoxes">
+            <td>{{user.id}}</td>
+            <td>{{user.name}} {{user.surname}}</td>
+            <td>{{user.enabled | yesNo}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.email}}</td>
+            <td><span ng-repeat="role in user.roles">{{role | lowercase}}, </span></td>
+            <td>
+            	<button ng-click="vm.enableUser(user)" ng-if="!user.enabled" class="btn btn-primary" type="button">Enable</button>
+            	<button ng-click="vm.disableUser(user)" ng-if="user.enabled" class="btn btn-primary" type="button">Disable</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

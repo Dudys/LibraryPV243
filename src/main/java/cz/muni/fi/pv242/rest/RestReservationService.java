@@ -20,10 +20,6 @@ public interface RestReservationService {
 	@Path("/")
 	List<ReservationDTO> getAllReservations();
 
-    @POST
-    @Path("/add")
-    ReservationDTO addReservation(ReservationCreateDTO reservation);
-
     @GET
     @Path("/{id}")
     ReservationDTO getReservation(@PathParam("id") long id);
@@ -31,7 +27,7 @@ public interface RestReservationService {
     @PUT
     @Path("/update")
     ReservationDTO updateReservation(ReservationDTO updatedResetvation);
-
+    
     @DELETE
     @Path("/{id}/delete")
     void deleteReservation(@PathParam("id") long id);

@@ -7,21 +7,18 @@ import cz.muni.fi.pv242.service.ReservationService;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.PathParam;
 
 /**
  * Created by Jan Duda on 5/26/2016.
  */
+@Stateless
 public class RestReservationServiceImpl implements RestReservationService {
 
     @Inject
     private ReservationService reservationService;
-
-
-    @Override
-    public ReservationDTO addReservation(ReservationCreateDTO reservation) {
-        return reservationService.createReservation(reservation);
-    }
 
     @Override
     public ReservationDTO getReservation(long id) {
@@ -33,13 +30,13 @@ public class RestReservationServiceImpl implements RestReservationService {
         return reservationService.updateReservation(updatedResetvation);
     }
 
-    @Override
-    public void deleteReservation(long id) {
-        reservationService.deleteReservation(reservationService.getReservationByID(id));
-    }
-
 	@Override
 	public List<ReservationDTO> getAllReservations() {
 		return reservationService.getAllReservations();
+	}
+	
+	@Override
+	public void deleteReservation(long id){
+		reservationService.deleteReservation(id);
 	}
 }

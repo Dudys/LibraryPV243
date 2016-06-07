@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="container">
+    <div class="page-header">
+        <h1>{{ vm.title }}</h1>
+    </div>
+</div>
+<div class="container" id="searchBoxes">
+	<form name="form" novalidate class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by id: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.id" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by start date: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBoxes.startDate" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Filter by end date: </label>
+			<div class="col-xs-3">
+				<input type="text" ng-model="searchBox.endTime" class="form-control">
+			</div>
+		</div>
+	</form> 
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>borrowing id</th>
+            <th>Book</th>
+            <th>ISBN</th>
+            <th>Borrowings from</th>
+            <th>Borrowings to</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="borrowing in vm.borrowings | filter:searchBoxes">
+            <td>{{borrowing.id}}</td>
+            <td>{{borrowing.borrowedBook.name}}</td>
+            <td>{{borrowing.borrowedBook.isbn}}</td>
+            <td>{{borrowing.startDate | date:'dd.MM.yyyy'}}</td>
+            <td>{{borrowing.endDate | date:'dd.MM.yyyy'}}</td>
+            <td>
+            	<button ng-if="vm.isLibrarian" ng-click="vm.returnBook(borrowing.id)" class="btn btn-primary" type="button">Return</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

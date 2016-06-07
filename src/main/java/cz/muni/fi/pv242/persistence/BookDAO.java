@@ -2,9 +2,9 @@ package cz.muni.fi.pv242.persistence;
 
 
 import cz.muni.fi.pv242.persistence.entity.Book;
+import cz.muni.fi.pv242.persistence.entity.Borrowing;
 
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -25,10 +25,10 @@ public class BookDAO {
         return em.find(Book.class, id);
     }
 
-    public List getAll(){
+    public List<Book> getAll(){
         return em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
     }
-
+    
     public void update(Book book) {
         em.merge(book);
     }

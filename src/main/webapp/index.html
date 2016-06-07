@@ -1,70 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="app">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
     <title>Library</title>
-    <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"  crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-static-top">
+	    <div class="container" ng-controller="NavController as nav">
+        	<div class="navbar-header">
+    	        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+                	<span class="icon-bar"></span>
+                	<span class="icon-bar"></span>
+                	<span class="icon-bar"></span>
+            	</button>
+        	    <a class="navbar-brand" href="#/books">Library</a>
+    	    </div>
+
+	        <div class="collapse navbar-collapse" id="navbar" ng-if="nav.isUserLoggedIn()">
+            	<ul class="nav navbar-nav">
+        	        <li><a href="#/books">Books</a></li>
+    	            <li><a href="#/reservations" ng-if="nav.isUserCustomer()">Your Reservations</a></li>
+	                <li><a href="#/borrowings" ng-if="nav.isUserCustomer()">Your Borrowings</a></li>
+                	<li><a href="#/admin/users" ng-if="nav.isUserAdmin() || vm.isUserLibrarian()">Users</a></li>
+                	<li><a href="#/librarian/reservations" ng-if="nav.isUserLibrarian()">All Reservations</a></li>
+                	<li><a href="#/librarian/borrowings" ng-if="nav.isUserLibrarian()">All Borrowings</a></li>
+            	</ul>
+        	    <ul class="nav navbar-nav navbar-right">
+        	    	<li><a>{{ nav.getUsersName() }}</a></li>
+                	<li><a href="#/login">Log out</a></li>
+            	</ul>
+        	</div>
+    	</div>
+	</nav>
+
+    <div class="container">
+		<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+        <div ng-view></div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="js/angular_app.js"></script>
-    <script src="js/validation_directive.js"></script>
 
-</head>
-<body>
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/">Library</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="nav navbar-nav">
-                <li><a href="#/books">Books</a></li>
-                <li><a href="#/reservations">Reservations</a></li>
-                <li><a href="#/borrowings">Borrowings</a></li>
-                <li><a href="#/users">Users</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/login">Log in</a></li>
-                <li><a href="#/signup">Sign up</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div class="container">
-    <div ng-app="library">
-
-        <!--<div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"> <span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> <span>{{warningAlert}}</span>
-        </div>
-        <div ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideErrorAlert()"> <span aria-hidden="true">&times;</span></button>
-            <strong>Error!</strong> <span>{{errorAlert}}</span>
-        </div>
-        <div ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"> <span aria-hidden="true">&times;</span></button>
-            <strong>Success !</strong> <span>{{successAlert}}</span>
-        </div> -->
-
-        <div ng-view></div>
-    </div>
-</div>
+    <script src="app.js"></script>
+    <script src="app-services/authentication.service.js"></script>
+    <script src="app-services/flash.service.js"></script>
+    <script src="app-services/book.service.js"></script>
+	<script src="app-services/user.service.js"></script>
+	<script src="app-services/filters.js"></script>
+	<script src="app-services/reservation.service.js"></script>
+	<script src="app-services/borrowing.service.js"></script>
+	
+	<script src="nav.controller.js"></script>
+	<script src="add_user/add_user.controller.js"></script>
+	<script src="borrowings/users_borrowings.controller.js"></script>
+	<script src="reservations/users_reservations.controller.js"></script>
+	<script src="user/user.controller.js"></script>
+	<script src="add_book/add_book.controller.js"></script>
+    <script src="book/book.controller.js"></script>
+    <script src="home/home.controller.js"></script>
+    <script src="login/login.controller.js"></script>
+    <script src="register/register.controller.js"></script>
+    <script src="reservations/all_reservations.controller.js"></script>
+    <script src="borrowings/all_borrowings.controller.js"></script>    
 </body>
 </html>

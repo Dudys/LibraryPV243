@@ -2,6 +2,7 @@ package cz.muni.fi.pv242.rest;
 
 import cz.muni.fi.pv242.rest.model.BookCreateDTO;
 import cz.muni.fi.pv242.rest.model.BookDTO;
+import cz.muni.fi.pv242.rest.model.DateModel;
 
 import java.util.List;
 
@@ -41,5 +42,17 @@ public interface RestBookService {
 
     @DELETE
     @Path("/{id}/delete")
-    void deleteBook(@PathParam("id") long id);
+    boolean deleteBook(@PathParam("id") long id);
+    
+    @GET
+    @Path("/{id}/available")
+    DateModel whenIsBookAvailable(@PathParam("id") long id);
+    
+    @GET
+    @Path("/{id}/isavailable")
+    boolean isBookAvailable(@PathParam("id") long id);
+    
+    @GET
+    @Path("/{id}/canbereserved")
+    boolean canBookBeReserved(@PathParam("id") long id);
 }
