@@ -65,15 +65,17 @@ public class WebsocketTest {
 
 
 			// open websocket
-			final WebsocketClientEndpoint clientTestEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/library/books"));
+			final WebsocketClientEndpoint clientTestEndPoint = new WebsocketClientEndpoint(new URI("ws://localhost:8080/Library/books"));
 
-
+		//waiting for opening session
+		Thread.sleep(500L);
 
 			// send message to websocket
 			clientTestEndPoint.sendMessage("getBook:" + created.getId());
 
-		Thread.sleep(500);
-			// wait 5 seconds for messages from websocket
+		//increasing wait for response
+		increasingWaint(clientTestEndPoint);
+
 		Assert.assertNotNull(clientTestEndPoint.getResponseContain());
 
 	}
@@ -141,6 +143,20 @@ public class WebsocketTest {
 		}
 
 
+	}
+
+	private void increasingWaint(WebsocketClientEndpoint clientEndpoint) throws InterruptedException {
+		long time = 100;
+		for(int i = 0; i<5; i++)
+		{
+			Thread.sleep(time);
+			if(clientEndpoint.getResponseContain() != null)
+			{
+				return;
+			}
+
+			time *= 2;
+		}
 	}
 	}
 
