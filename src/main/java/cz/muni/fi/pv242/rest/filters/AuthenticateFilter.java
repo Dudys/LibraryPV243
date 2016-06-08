@@ -3,8 +3,6 @@ package cz.muni.fi.pv242.rest.filters;
 import org.jboss.util.Base64;
 
 import javax.inject.Inject;
-import javax.security.auth.login.LoginContext;
-import javax.security.auth.login.LoginException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.MediaType;
@@ -37,8 +35,7 @@ public class AuthenticateFilter implements ContainerRequestFilter {
 		final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 
 		//If no authorization information present; block access
-		if(authorization == null || authorization.isEmpty())
-		{
+		if (authorization == null || authorization.isEmpty()) {
 
 			Response response = Response
 					.status(Response.Status.UNAUTHORIZED)
@@ -60,25 +57,17 @@ public class AuthenticateFilter implements ContainerRequestFilter {
 		final String username = tokenizer.nextToken();
 		final String password = tokenizer.nextToken();
 
-		// TODO: Login Context might be connected to HTTPBasic auth somehow here, if required (?)
-
-		// Obtain a LoginContext, needed for authentication. Tell it
-		// to use the LoginModule implementation specified by the
-		// entry named "Sample" in the JAAS login configuration
-		// file and to also use the specified CallbackHandler.
-		LoginContext lc = null;
-
-		try {
-			lc = new LoginContext("Sample", new LocalCallbackHandler());
-
-			// attempt authentication
-			lc.login();
-
-		} catch (LoginException | SecurityException le) {
-			System.err.println("Cannot create LoginContext." + le.getMessage());
-			System.err.println("Auth failed for " + lc.getSubject().getPrivateCredentials());
-			System.exit(-1);
+		if(!userService.authenticate(username,password))
+		{
+			Response response = Response
+					.status(Response.Status.UNAUTHORIZED)
+					.type(MediaType.TEXT_PLAIN_TYPE)
+					.entity("Access denied for this resource.")
+					.build();
+			requestContext.abortWith(response);
+			return;
 		}
+
 	}
 }
 
