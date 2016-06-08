@@ -15,6 +15,9 @@ localhost:8080/library/
 http://localhost:8080/library/rest/users/createDataBatchJob
 
 Logins: (email - password)
+
 bouskaJ@gmail.com - password
+
 doubek@gmail.com - coolpassword
+
 krcmar@gmail.com - 46safd
