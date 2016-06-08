@@ -1,11 +1,5 @@
 package cz.muni.fi.pv242.rest;
 
-import cz.muni.fi.pv242.rest.model.BookCreateDTO;
-import cz.muni.fi.pv242.rest.model.BookDTO;
-import cz.muni.fi.pv242.rest.model.DateModel;
-
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +10,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import java.util.List;
+
+import cz.muni.fi.pv242.rest.filters.Authenticate;
+import cz.muni.fi.pv242.rest.model.BookCreateDTO;
+import cz.muni.fi.pv242.rest.model.BookDTO;
+import cz.muni.fi.pv242.rest.model.DateModel;
+
 /**
  * Created by Jan Duda on 5/26/2016.
  */
@@ -25,6 +26,7 @@ import javax.ws.rs.core.MediaType;
 public interface RestBookService {
 	
 	@GET
+    @Authenticate
 	@Path("/")
 	List<BookDTO> getAllBooks();
 
@@ -37,10 +39,12 @@ public interface RestBookService {
     BookDTO getBook(@PathParam("id") long id);
 
     @PUT
+    @Authenticate
     @Path("/update")
     BookDTO updateBook(BookDTO updatedBook);
 
     @DELETE
+    @Authenticate
     @Path("/{id}/delete")
     boolean deleteBook(@PathParam("id") long id);
     
